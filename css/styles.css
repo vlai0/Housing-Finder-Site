@@ -40,7 +40,7 @@
 }
 
 .navigation-logo h1 {
-    font-size: 1em;
+    font-size: 1.2em;
 }
 
 .navigation-bar {
@@ -132,8 +132,12 @@
     color: white;
 }
 
-.hero-banner h1 {
+.hero-content h2 {
     font-size: 2.2em;
+}
+
+.hero-content p {
+    margin-bottom: 1rem;
 }
 
 .cta {
@@ -154,6 +158,90 @@
     background-color: gray;
 }
 
+
+/* ########## Log In ########## */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 64px);
+    background-color: #007155;
+}
+
+
+/* ########## Form (Login/Register) ########## */
+
+.login-form {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-section {
+    background-color: white;
+    max-width: 24rem;
+    margin: auto;
+    padding: 2rem;
+}
+
+.form-section h2 {
+    font-size: 2em;
+    font-family: "Inter", sans-serif;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.form-element {
+    display: grid;
+    flex-direction: column;
+    margin-bottom: 2rem;
+    font-family: "Inter", sans-serif;
+}
+
+.form-element label {
+    font-size: small;
+}
+
+.form-element input,
+.form-element button {
+    outline-color: #FFD416;
+}
+
+.form-element input[type="text"],
+.form-element input[type="password"] {
+    padding: 0.5em;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+}
+
+.form-redirect {
+    font-family: "Inter", sans-serif;
+}
+
+.form-redirects {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.form-redirect a {
+    color: blue;
+    font-size: small;
+}
+
+.login-form button {
+    padding: 0.5rem;
+    border: none;
+    cursor: pointer;
+    background-color: #F47D20;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.login-form button:hover {
+    background-color: gray;
+}
 
 /* ########## Media Queries & Breakpoints ########## */
 @media (min-width: 992px) {
@@ -191,15 +279,11 @@
         border-radius: 2rem;
     }
 
-    .hero-banner {
-        
-    }
-
     .hero-content {
         padding-left: 4rem;
     }
     
-    .hero-content h1 {
+    .hero-content h2 {
         font-size: 3.2em;
     }
     
@@ -216,35 +300,35 @@
     .secondary-cta {
         margin-left: 1rem; 
     }
+
 }
 
-    @media (min-width: 1400px) {
-        .navigation-bar {
-            padding-left: 16rem;
-            padding-right: 16rem;
-        }
-        
-        .navigation-links a {
-            margin-left: 4rem;
-        }
+
+@media (min-width: 1400px) {
+    .navigation-bar {
+        padding-left: 16rem;
+        padding-right: 16rem;
+    }
+    
+    .navigation-links a {
+        margin-left: 4rem;
+    }
 
 
-        .hero-content {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: left;
-            width: 100%;
-            height: 100%;
-            padding-left: 16rem;
-            padding-right: 16rem;
-            font-family: "Inter", sans-serif;
-            color: white;
-        }
-        
-        .hero-content h1 {
-            font-size: 4em;
-        }
-        
+    .hero-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: left;
+        width: 100%;
+        height: 100%;
+        padding-left: 16rem;
+        padding-right: 16rem;
+        font-family: "Inter", sans-serif;
+        color: white;
+    }
+    
+    .hero-content h2 {
+        font-size: 4em;
     }
 }

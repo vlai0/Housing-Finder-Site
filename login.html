@@ -34,25 +34,37 @@
                     <li><a href="#">Subleases</a></li>
                     <li><a href="#">Roommate Requests</a></li>
                 </ul>
-                <li><a href="login.html" class="bullet">Log In</a></li>
+                <li><a href="#" class="bullet">Log In</a></li>
             </ul>
         </nav>
 
-        <main class="landing">
-            <div class="hero-banner">
-                <section class="hero-content">
-                    <h2>UVM Housing Finder</h2>
-                    <p>Need a place to stay? Find the right <span style="color: #FFD416">home</span> for you <span style="color: #007155">today</span>.</p>
-                    <nav class="cta-nav">
-                        <a class="cta">Get Started</a>
-                        <a class="cta secondary-cta">Learn More</a>
-                    </nav>
+        <main class="login">
+            <div class="login-wrapper">
+                <section class="form-section">
+                    <h2>Log In</h2>
+                    <form class="login-form" action="POST">
+                        <p class="form-element">
+                            <label for="txtUsername">Username</label>
+                            <input type="text" name="txtUsername" placeholder="Enter Your Username" required>
+                        </p>
+                        <p class="form-element">
+                            <label for="txtPassword">Password</label>
+                            <input type="password" name="txtPassword" placeholder="Enter Your Password" required>
+                        </p>
+                        <p class="form-element">
+                            <button type="submit">Login</button>
+                        </p>
+                    </form>
+                    <div class="form-redirects">
+                        <p class="form-redirect">
+                            <a href="#">Don't have an account?</a>
+                        </p>
+                        <p class="form-redirect">
+                            <a href="#">Forgot your password?</a>
+                        </p>
+                    </div>
                 </section>
             </div>
-
-            <section>
-                <h2>PLaceholder</h2>
-            </section>
         </main>
 
         <!-- Main/Unique Section -->
