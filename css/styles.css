@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Noto+Sans:wght@300;400;700&family=Raleway:wght@300;400;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ########## Fonts ########## */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&display=swap');
-
+html {
+    scroll-behavior: smooth;
+}
 
 /* ########## Navigation Bar ########## */
 .hamburger-button {
@@ -54,7 +56,7 @@
     width: 100%;
     height: 64px;
     background-color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Raleway', sans-serif;
     z-index: 0;
 }
 
@@ -128,16 +130,17 @@
     height: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
-    font-family: "Inter", sans-serif;
     color: white;
 }
 
 .hero-content h2 {
     font-size: 2.2em;
+    font-family: "Noto Sans", sans-serif;
 }
 
 .hero-content p {
     margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
 }
 
 .cta {
@@ -147,6 +150,8 @@
     border-radius: 1rem;
     color: white;
     text-align: center;
+    font-family: "Inter", sans-serif;
+    text-decoration: none;
 }
 
 .secondary-cta {
@@ -158,6 +163,26 @@
     background-color: gray;
 }
 
+/* ########## Landing Page ########## */
+.landing-section h2 {
+    font-size: 1.6em;
+    font-family: "Inter", sans-serif;
+    color: #434341;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.landing-section p {
+    font-family: "Lato", sans-serif;
+    color: #434341;
+}
+
+.landing-section {
+    padding-top: calc(1rem + 64px);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+}
 
 /* ########## Log In ########## */
 .login-wrapper {
@@ -264,6 +289,7 @@
         flex-direction: row;
         position: static;
         width: auto;
+        height: 0;
         padding: 0;
         background-color: transparent;
     }
@@ -324,7 +350,6 @@
         height: 100%;
         padding-left: 16rem;
         padding-right: 16rem;
-        font-family: "Inter", sans-serif;
         color: white;
     }
     
