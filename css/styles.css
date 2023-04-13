@@ -334,6 +334,8 @@ html {
 .listing-slideshow {
     position: relative;
     margin-bottom: 1rem;
+    max-width: 32rem;
+    margin: auto;
     z-index: 0;
 }
 
