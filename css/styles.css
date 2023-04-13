@@ -322,8 +322,35 @@ html {
     padding: 1rem;
 }
 
+.listing section {
+    margin-bottom: 1rem;
+}
+
+.listing > section p {
+    font-family: "Lato", sans-serif;
+}
+
+.listing > section h3 {
+    font-family: "Inter", sans-serif;
+}
 .listing-header {
     font-family: "Inter", sans-serif;
+}
+
+.listing-header h2 {
+    font-size: 1.4rem;
+}
+
+.listing-header p {
+    font-size: 0.8rem;
+}
+
+.listing-header a {
+    text-decoration: none;
+}
+
+.listing-details {
+
 }
 
 .listing-body p {
