@@ -344,7 +344,7 @@ html {
     display: flex;
     background-color: transparent;
     border: none;
-    color: white;
+    color: #BBBBBB;
     font-size: 2rem;
     padding: 0.5rem;
     position: absolute;
