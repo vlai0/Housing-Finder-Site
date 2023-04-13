@@ -369,18 +369,6 @@ html {
     background-color: gray;
 }
 
-/* ########## Comment Section ########## */
-
-.comment-section {
-    padding: 1rem;
-    background-color: #BBBBBB;
-}
-
-.comment-section h2 {
-    font-family: "Inter", sans-serif;
-    font-size: 1.4em;
-}
-
 /* Slideshow */
 .listing-slideshow {
     position: relative;
@@ -452,6 +440,46 @@ html {
 
 .active, .slideshow-dot:hover  {
     background-color: #F47D20;
+}
+
+/* ########## Dormitory Listings ########## */
+.dormitory-listings {
+}
+
+.search-listing-header {
+    display: grid;
+    grid-auto-flow: column;
+    background-color: red;
+    position: relative;
+}
+
+.dormitory-listings h2 {
+    font-family: "Inter", sans-serif;
+}
+
+.dormitory-listing h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 1em;
+}
+
+.dormitory-listing h4 {
+    font-family: "Montserrat", sans-serif;
+}
+
+.dormitory-listing p {
+    font-family: "Lato", sans-serif;
+}
+
+.search-listing-dropdown {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    background-color: #434341;
+    width: 100%;
+}
+
+.search-listing-dropdown.show {
+    display: flex;
 }
 
 /* ########## Footer ########## */
