@@ -39,19 +39,15 @@
                 <div class="listing-slideshow">
                     <!-- Slides -->
                     <div class="slide">
-                        <p class="slide-number">1 / 4</p>
                         <img src="images/landing-background.jpg" style="width: 100%">
                     </div>
                     <div class="slide">
-                        <p class="slide-number">2 / 4</p>
                         <img src="images/adad.PNG" style="width: 100%">
                     </div>
                     <div class="slide">
-                        <p class="slide-number">3 / 4</p>
                         <img src="images/Capture.PNG" style="width: 100%">
                     </div>
                     <div class="slide">
-                        <p class="slide-number">4 / 4</p>
                         <img src="images/colors.PNG" style="width: 100%">
                     </div>
 
@@ -60,7 +56,7 @@
                     <button class="slideshow-next" onClick="changeSlide(1);">&#10095;</button>
 
                     <!-- Slideshow Dots -->
-                    <div>
+                    <div class="slideshow-dots">
                         <span class="slideshow-dot" onclick="setSlide(1)"></span>
                         <span class="slideshow-dot" onclick="setSlide(2)"></span>
                         <span class="slideshow-dot" onclick="setSlide(3)"></span>
@@ -142,7 +138,7 @@
                     dots[index].className = dots[index].className.replace(" active", "");
                 }
 
-                slides[slideIndex - 1].style.display = "block";
+                slides[slideIndex - 1].style.display = "flex";
                 dots[slideIndex - 1].className += " active";
             }
         </script>

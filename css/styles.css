@@ -33,7 +33,7 @@ html {
     top: 0;
     margin-top: 0.5rem;
     margin-left: 0;
-    z-index: 2;
+    z-index: 3;
 }   
 
 .navigation-close-button.show {
@@ -57,7 +57,7 @@ html {
     height: 64px;
     background-color: white;
     font-family: 'Raleway', sans-serif;
-    z-index: 0;
+    z-index: 1;
     border-bottom: 4px solid #007155;
 }
 
@@ -72,7 +72,7 @@ html {
     height: 100vh;
     text-align: center;
     background-color: white;
-    z-index: 1;
+    z-index: 2;
     transition: 0.5s;
     left: -100vw;
 }
@@ -230,7 +230,7 @@ html {
     text-align: center;
 }
 
-/* ########## Log In ########## */
+/* ########## Log In Page ########## */
 .login-wrapper {
     display: flex;
     justify-content: center;
@@ -314,6 +314,92 @@ html {
 
 .login-form button:hover {
     background-color: gray;
+}
+
+/* ########## Listing ########## */
+
+.listing {
+    padding: 1rem;
+}
+
+.listing-header {
+    font-family: "Inter", sans-serif;
+}
+
+.listing-body p {
+    font-family: "Lato", sans-serif;
+}
+
+/* Slideshow */
+.listing-slideshow {
+    position: relative;
+    margin-bottom: 1rem;
+    z-index: 0;
+}
+
+.slideshow-previous,
+.slideshow-next {
+    display: flex;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 0.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.slideshow-previous:hover,
+.slideshow-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 2px;
+}
+
+.slideshow-previous {
+    left: 0;
+}
+
+.slideshow-next {
+    right: 0;
+}
+
+.slideshow-dots {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+
+}
+
+.slideshow-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #BBBBBB;
+    cursor: pointer;
+}
+
+.slide {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #F2F2F2;
+    height: 16rem;
+}
+
+.slide img {
+    max-height: 100%;
+    object-fit: fill;
+}
+
+.active, .slideshow-dot:hover  {
+    background-color: #F47D20;
 }
 
 /* ########## Footer ########## */
