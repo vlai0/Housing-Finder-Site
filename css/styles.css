@@ -357,6 +357,30 @@ html {
     font-family: "Lato", sans-serif;
 }
 
+.follow-button {
+    background-color: #F47D20;
+    border: none;
+    padding: 0.5rem;
+    color: black;
+    margin-top: 0.5rem;
+}
+
+.follow-button:hover {
+    background-color: gray;
+}
+
+/* ########## Comment Section ########## */
+
+.comment-section {
+    padding: 1rem;
+    background-color: #BBBBBB;
+}
+
+.comment-section h2 {
+    font-family: "Inter", sans-serif;
+    font-size: 1.4em;
+}
+
 /* Slideshow */
 .listing-slideshow {
     position: relative;
