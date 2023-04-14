@@ -349,10 +349,6 @@ html {
     text-decoration: none;
 }
 
-.listing-details {
-
-}
-
 .listing-body p {
     font-family: "Lato", sans-serif;
 }
@@ -443,18 +439,20 @@ html {
 }
 
 /* ########## Dormitory Listings ########## */
-.dormitory-listings {
-}
 
-.search-listing-header {
-    display: grid;
-    grid-auto-flow: column;
-    background-color: red;
-    position: relative;
+.listings {
+    padding: 1rem;
+}
+.dormitory-listings {
 }
 
 .dormitory-listings h2 {
     font-family: "Inter", sans-serif;
+}
+
+
+.dormitory-listing {
+    position: relative;
 }
 
 .dormitory-listing h3 {
@@ -470,12 +468,26 @@ html {
     font-family: "Lato", sans-serif;
 }
 
-.search-listing-dropdown {
+.search-listing-header {
+    background-color: #BBBBBB;
     display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.search-listing-dropdown-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.search-listing-dropdown {
+    display: none;
     position: absolute;
-    top: 100%;
     background-color: #434341;
     width: 100%;
+    top: 100%;
+    padding: 1rem;
 }
 
 .search-listing-dropdown.show {
