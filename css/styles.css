@@ -446,25 +446,30 @@ html {
     padding: 1rem;
 }
 
-.dormitory-listings h2 {
+.dormitory-listings {
+    display: grid;
+    grid-auto-flow: row;
+    gap: 1rem;
+}
+
+.dormitory-listing {
+    
+}
+
+.dormitory-listing-wrapper h2 {
     font-family: "Inter", sans-serif;
 }
 
-
-.dormitory-listing {
-    position: relative;
-}
-
-.dormitory-listing h3 {
+.dormitory-listing-wrapper h3 {
     font-family: "Inter", sans-serif;
     font-size: 1em;
 }
 
-.dormitory-listing h4 {
+.dormitory-listing-wrapper h4 {
     font-family: "Montserrat", sans-serif;
 }
 
-.dormitory-listing p {
+.dormitory-listing-wrapper p {
     font-family: "Lato", sans-serif;
 }
 
@@ -483,7 +488,6 @@ html {
 
 .search-listing-dropdown {
     display: none;
-    position: absolute;
     background-color: #434341;
     width: 100%;
     top: 100%;
