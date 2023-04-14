@@ -61,8 +61,8 @@ class Database {
     public function displaySQL($sql, $data = ''){
         $sqlText = $sql;
         foreach ($data as $value){
-            // Look for ? and replace with the value
-            $pos = strpos($sqlText, $values);
+
+			$pos = strpos($sqlText, $values);
             if ($pos !== false) {
                 $sqlText = substr_replace($sqlText, '"' .
         $value . '"', $pos, strlen($sqlText));
@@ -71,4 +71,47 @@ class Database {
     
     print '<p>' . $sqlText . '</p>';
 	}
+
+	public function insert($query, $values = ''){
+        $statement = $this->pdo->prepare($query);
+        $goodRecord = false;
+  
+        if(is_array($values)){
+            $goodRecord = $statement->execute($values);
+        } else {
+            $statement->execute();
+        }
+       
+        $statement->closeCursor();
+        return $goodRecord;
+    }
+
+	public function update($query, $values = ''){
+        $statement = $this->pdo->prepare($query);
+        $goodRecord = false;
+  
+        if(is_array($values)){
+            $goodRecord = $statement->execute($values);
+        } else {
+            $statement->execute();
+        }
+       
+        $statement->closeCursor();
+        return $goodRecord;
+	}
+
+	public function delete($query, $values = ''){
+        $statement = $this->pdo->prepare($query);
+        $goodRecord = false;
+  
+        if(is_array($values)){
+            $goodRecord = $statement->execute($values);
+        } else {
+            $statement->execute();
+        }
+       
+        $statement->closeCursor();
+        return $goodRecord;
+	}
+}
 ?>
