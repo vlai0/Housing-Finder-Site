@@ -187,7 +187,14 @@ html {
     padding: 1rem;
 }
 
-.walkthrough-card {
+.walkthrough {
+    display: grid;
+    grid-auto-flow: row;
+    justify-items: center;
+    gap: 2rem;
+}
+
+.walkthrough-header {
     display: grid;
     grid-template-columns: 64px auto;
     align-items: center;
@@ -196,6 +203,7 @@ html {
     margin-top: 1rem;
     margin-bottom: 1rem;
     max-width: 16rem;
+    margin: 0rem auto 1rem auto;
 }
 
 .walkthrough-card h3 {
@@ -228,6 +236,7 @@ html {
     display: block;
     font-family: "Inter", sans-serif;
     text-align: center;
+    margin: auto;
 }
 
 /* ########## Log In Page ########## */
@@ -588,6 +597,11 @@ footer a:hover {
         padding-left: 4rem;
         padding-right: 4rem;
     }
+
+    .walkthrough {
+        grid-auto-flow: column;
+    }
+
 
     .listing {
         padding-left: 4rem;
