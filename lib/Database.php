@@ -113,5 +113,20 @@ class Database {
         $statement->closeCursor();
         return $goodRecord;
 	}
+
+	public function lastInsert(){
+		$primaryKey = -1;
+		$query = 'SELECT LAST_INSERT_ID()';
+		$statement = $this->pdo->prepare($query);
+		$statement->execute();
+		$recordSet = $statement->fetchAll();
+		$statement->closeCursor();
+
+		if($recordSet){
+			$primaryKey = $recordSet[0]['LAST_INSERT_ID()'];
+		}
+
+		return $primaryKey;
+	}
 }
 ?>
