@@ -434,6 +434,7 @@ html {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    animation: fade-in 0.4s;
 }
 
 .active, .slideshow-dot:hover  {
@@ -526,6 +527,16 @@ footer a:hover {
     padding-bottom: 1rem;
 }
 
+/* ########## Animations ########## */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
 
 /* ########## Media Queries & Breakpoints ########## */
 @media (min-width: 992px) {
