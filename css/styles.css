@@ -165,22 +165,20 @@
     justify-content: center;
     align-items: center;
     height: calc(100vh - 64px);
-    background-color: #007155;
+    background: rgb(0, 113, 85);
+    background: linear-gradient(0deg, rgba(0, 113, 85, 1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
 
 /* ########## Form (Login/Register) ########## */
 
-.login-form {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
 
 .form-section {
     background-color: white;
     max-width: 24rem;
     margin: auto;
-    padding: 2rem;
+    padding: 2rem 1rem 2rem 1rem;
+    border-radius: 8px;
 }
 
 .form-section h2 {
@@ -214,8 +212,15 @@
     border-top: none;
 }
 
+.form-link {
+    color: #2B2D2F; 
+    font-size: small;
+}
+
 .form-redirect {
     font-family: "Inter", sans-serif;
+    color: #2B2D2F;
+    font-size: small;
 }
 
 .form-redirects {
@@ -225,12 +230,7 @@
     gap: 2rem;
 }
 
-.form-redirect a {
-    color: blue;
-    font-size: small;
-}
-
-.login-form button {
+.form-body button {
     padding: 0.5rem;
     border: none;
     cursor: pointer;
@@ -239,7 +239,7 @@
     font-weight: bold;
 }
 
-.login-form button:hover {
+.form-body button:hover {
     background-color: gray;
 }
 
@@ -314,7 +314,6 @@
     .navigation-links a {
         margin-left: 4rem;
     }
-
 
     .hero-content {
         display: flex;
