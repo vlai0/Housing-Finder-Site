@@ -460,13 +460,24 @@ main h2:not(.hero-banner h2) {
 }
 
 .search-filters {
-    position: fixed;
     background-color: red;
     height: 64px;
     width: 100%;
     left: 0;
     top: 64px;
     
+}
+
+.fldCampus, .fldComplex, .fldRoomSize, .fldBathroom{
+    display: inline-block;
+    font-family: "Inter", sans-serif;
+    padding: 0.5rem;
+    
+}
+
+.search-filters select{
+    border: none;
+    padding: 0.5rem;
 }
 
 .search-listings {
