@@ -12,6 +12,41 @@
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </head>
     <body>
+        <?php
+            session_start();
+
+            include 'connect-DB.php';
+            
+            if($_SERVER["REQUEST_METHOD"] === "POST") {
+
+                $username = $_POST["txtUsername"];
+                $password = $_POST["txtPassword"];
+    
+                $query = "SELECT fldPasswordHash FROM tblUser ";
+                $query .= "WHERE pmkUsername = ?";
+                $data = array($username);
+
+                $results = $thisDatabaseReader->select($query, $data);
+                print_r($results);
+
+                // Check if username exists.
+                if(!empty($results)) {
+                    // Verify password is correct.
+                    if(password_verify($password, $results[0]["fldPasswordHash"])) {
+                        // Success: Redirect user to dashboard.php and store username in session variable.
+                        $_SESSION["username"] = $username;
+                        header("Location: dashboard.php");
+                        exit();
+                    } else {
+                        print "<p class=\"form-error\">Incorrect username or password.</p>";
+                    }
+                } else {
+                    print "<p class=\"form-error\">Incorrect username or password.</p>";
+                }
+            }
+    
+        ?>
+
         <!-- Navigation Bar -->
         <nav class="navigation-bar">
             <div class="hamburger-button">
@@ -42,7 +77,7 @@
             <div class="login-wrapper">
                 <section class="form-section">
                     <h2>Log In</h2>
-                    <form class="login-form" action="POST">
+                    <form class="login-form" action="" method="POST">
                         <p class="form-element">
                             <label for="txtUsername">Username</label>
                             <input type="text" name="txtUsername" placeholder="Enter Your Username" required>
