@@ -456,12 +456,27 @@ main h2:not(.hero-banner h2) {
 
 .listings {
     padding: 1rem;
+    min-height: 100vh;
+}
+
+.search-filters {
+    position: fixed;
+    background-color: red;
+    height: 64px;
+    width: 100%;
+    left: 0;
+    top: 64px;
+    
 }
 
 .search-listings {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 1rem;
+}
+
+.search-listing-wrapper {
+    margin-top: 64px;
 }
 
 .search-listing-wrapper h2 {
@@ -479,7 +494,29 @@ main h2:not(.hero-banner h2) {
 .search-listing-header {
     padding: 1rem;
     background-color: #BBBBBB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.search-listing-header button {
+    padding: 0.5rem;
+    border: none;
+    background-color: #F47D20;
+    cursor: pointer;
+    margin-left: 1rem;
+    font-family: "Inter", sans-serif;
+}
+
+.search-listing-header button:hover {
+    background-color: gray;
+}
+
+.search-listing-header > button > a {
+    text-decoration: none;
+    color: black;
+}
+
 .search-listing-header h3 {
     display: block;
     white-space: nowrap;

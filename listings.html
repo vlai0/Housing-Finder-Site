@@ -35,46 +35,40 @@
         </nav>
 
         <main class="listings">
+            <div class="search-filters">
+                <form action="" method="GET">
+                    <!--
+                        Dropdown: Campuses.
+                        Dropdown: Housing Complex (UHeights, Central, etc.).
+                        Dropdown: Room Size (Single, Double, Triple, etc.)
+                        Checkbox: Private Bathroom?
+                    -->
+                </form>
+            </div>
             <!-- Listings -->
-            <section class="dormitory-listing-wrapper">
+            <section class="search-listing-wrapper">
                 <h2>Dormitory Listings</h2>
-                <div class="search-filters">
-                </div>
-                <div class="dormitory-listings">
-                    <div class="dormitory-listing" id="listing-1">
-                        <section class="search-listing-header">
-                            <h3>Listing Example</h3>
-                            <button class="search-listing-dropdown-button" onClick="toggleListingDropdown('listing-1');"><i class="fa fa-chevron-down"></i></button>
-                        </section>
-                        <div class="search-listing-dropdown">
-                            <section class="search-listing-attribute">
-                                <h4>Hall</h4>
-                                <p>Harris</p>
-                            </section>
-                            <section class="search-listing-attribute">
-                                <h4>Room Type</h4>
-                                <p>Double</p>
-                            </section>
+                <div class="search-listings">
+                    <div class="search-listing" id="listing-1">
+                        <div class="search-listing-thumbnail">
+                            <img src="images/landing-background.jpg">
                         </div>
+                        <section class="search-listing-header">
+                            <h3>Listing Exasdadasdadadadadadadadadadadadadadadadadadadadadadadadadaadadasdadample</h3>
+                            <button><a href="#">View</a></button>
+                        </section>
                     </div>
 
-                    <div class="dormitory-listing" id="listing-2">
+                    <div class="search-listing" id="listing-2">
+                        <div class="search-listing-thumbnail">
+                            <img src="images/landing-background.jpg">
+                        </div>
                         <section class="search-listing-header">
                             <h3>Listing Example</h3>
-                            <button class="search-listing-dropdown-button" onClick="toggleListingDropdown('listing-2');"><i class="fa fa-chevron-down"></i></button>
+                            <button>View</button>
                         </section>
-                        <div class="search-listing-dropdown">
-                            <section class="search-listing-attribute">
-                                <h4>Hall</h4>
-                                <p>Harris</p>
-                            </section>
-                            <section class="search-listing-attribute">
-                                <h4>Room Type</h4>
-                                <p>Double</p>
-                            </section>
-                        </div>
                     </div>
-                    
+                
                 </div>
             </section>
         </main>
