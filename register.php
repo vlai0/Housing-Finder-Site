@@ -106,7 +106,6 @@
                             </p>
                             <p class="form-element">
                                 <button class="form-back-button" type="button">Back</button>
-                                <button class="form-next-button" type="button">Next</button>
                                 <button type="submit">Register</button>
                             </p>
                         </section>
