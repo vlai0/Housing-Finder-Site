@@ -230,6 +230,14 @@
     font-size: small;
 }
 
+.form-tab {
+    display: none;
+}
+
+.form-tab.active {
+    display: block;
+}
+
 .login-form button {
     padding: 0.5rem;
     border: none;

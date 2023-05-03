@@ -43,29 +43,7 @@
                 <section class="form-section">
                     <h2>Register</h2>
                     <form class="login-form" action="" method="POST">
-                        <section class="form-tab">
-                            <h3>Login Information</h3>
-                            <p class="form-element" id="form-tab-1">
-                                <label for="txtUsername">Username</label>
-                                <input type="text" name="txtUsername" placeholder="Enter Username" required>
-                            </p>
-                            <p class="form-element">
-                                <label for="txtEmail">Email</label>
-                                <input type="text" name="txtEmail" placeholder="Enter Email" required>
-                            </p>
-                            <p class="form-element">
-                                <label for="txtPassword">Password</label>
-                                <input type="password" name="txtPassword" placeholder="Enter Password" required>
-                            </p>
-                            <p class="form-element">
-                                <label for="txtConfirmPassword">Confirm Password</label>
-                                <input type="password" name="txtConfirmPassword" placeholder="Confirm Password" required>
-                            </p>
-                            <p class="form-element">
-                                <button type="button">Next</button>
-                            </p>
-                        </section>
-                        <section class="form-tab" id="form-tab-2">
+                        <section class="form-tab" id="form-tab-1">
                             <h3>Personal Information</h3>
                             <p class="form-element">
                                 <label for="txtFirstName">First Name</label>
@@ -90,11 +68,10 @@
                                 </select>
                             </p>
                             <p class="form-element">
-                                <button type="button">Back</button>
-                                <button type="button">Next</button>
+                                <button class="form-next-button" type="button">Next</button>
                             </p>
                         </section>
-                        <section class="form-tab" id="form-tab-3">
+                        <section class="form-tab" id="form-tab-2">
                             <h3>Tell People About Yourself</h3>
                             <p class="form-element">
                                 <label for="imgProfilePicture">Add a Profile Picture</label>
@@ -105,7 +82,31 @@
                                 <textarea cols="4" rows="5" maxlength="500" name="txtDescription"></textarea>
                             </p>
                             <p class="form-element">
-                                <button type="button">Back</button>
+                                <button class="form-back-button" type="button">Back</button>
+                                <button class="form-next-button" type="button">Next</button>
+                            </p>
+                        </section>
+                        <section class="form-tab" id="form-tab-3">
+                            <h3>Login Information</h3>
+                            <p class="form-element">
+                                <label for="txtUsername">Username</label>
+                                <input type="text" name="txtUsername" placeholder="Enter Username" required>
+                            </p>
+                            <p class="form-element">
+                                <label for="txtEmail">Email</label>
+                                <input type="text" name="txtEmail" placeholder="Enter Email" required>
+                            </p>
+                            <p class="form-element">
+                                <label for="txtPassword">Password</label>
+                                <input type="password" name="txtPassword" placeholder="Enter Password" required>
+                            </p>
+                            <p class="form-element">
+                                <label for="txtConfirmPassword">Confirm Password</label>
+                                <input type="password" name="txtConfirmPassword" placeholder="Confirm Password" required>
+                            </p>
+                            <p class="form-element">
+                                <button class="form-back-button" type="button">Back</button>
+                                <button class="form-next-button" type="button">Next</button>
                                 <button type="submit">Register</button>
                             </p>
                         </section>
@@ -135,6 +136,49 @@
                 navigationLinks.classList.toggle("show");
                 navigationCloseButton.classList.toggle("show");
             });
+
+            // Handle multi-step form.
+            let nextButtons = document.querySelectorAll(".form-next-button");
+            let backButtons = document.querySelectorAll(".form-back-button");
+
+            var currentTab = 0;
+            toggleFormTab(currentTab);
+
+            function toggleFormTab(currentTab) {
+                var tabs = document.getElementsByClassName("form-tab");
+                tabs[currentTab].classList.toggle("active");
+            }
+
+            let nextClickEvent = () => {
+                var tabCount = document.getElementsByClassName("form-tab").length;
+                console.log(currentTab + 1);
+                console.log(tabCount - 1);
+                if(!(currentTab + 1 >= tabCount) && !(currentTab + 1 < 0)) {
+                    toggleFormTab(currentTab);
+                    currentTab += 1;
+                    toggleFormTab(currentTab);
+                }
+            }
+
+            let backClickEvent = () => {
+                var tabCount = document.getElementsByClassName("form-tab").length;
+                console.log(currentTab - 1);
+                console.log(tabCount);
+                if(!(currentTab - 1 >= tabCount) && !(currentTab - 1 < 0)) {
+                    toggleFormTab(currentTab);
+                    currentTab -= 1;
+                    toggleFormTab(currentTab);
+                }
+            }
+
+            nextButtons.forEach((nextButton) => {
+                nextButton.addEventListener("click", nextClickEvent);
+            });
+
+            backButtons.forEach((backButton) => {
+                backButton.addEventListener("click", backClickEvent);
+            });
+
         </script>
     </body>
 </html>
