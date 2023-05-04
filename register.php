@@ -67,8 +67,8 @@
                                     <option value="Other">Other</option>
                                 </select>
                             </p>
-                            <p class="form-element">
-                                <button class="form-next-button" type="button">Next</button>
+                            <p class="form-element form-buttons">
+                                <button class="form-next-button" type="button">Next ></button>
                             </p>
                         </section>
                         <section class="form-tab" id="form-tab-2">
@@ -81,9 +81,9 @@
                                 <label for="txtDescription">About You</label>
                                 <textarea cols="4" rows="5" maxlength="500" name="txtDescription"></textarea>
                             </p>
-                            <p class="form-element">
-                                <button class="form-back-button" type="button">Back</button>
-                                <button class="form-next-button" type="button">Next</button>
+                            <p class="form-element form-buttons">
+                                <button class="form-back-button" type="button">< Back</button>
+                                <button class="form-next-button" type="button">Next ></button>
                             </p>
                         </section>
                         <section class="form-tab" id="form-tab-3">
@@ -104,8 +104,8 @@
                                 <label for="txtConfirmPassword">Confirm Password</label>
                                 <input type="password" name="txtConfirmPassword" placeholder="Confirm Password" required>
                             </p>
-                            <p class="form-element">
-                                <button class="form-back-button" type="button">Back</button>
+                            <p class="form-element form-buttons">
+                                <button class="form-back-button" type="button">< Back</button>
                                 <button type="submit">Register</button>
                             </p>
                         </section>
