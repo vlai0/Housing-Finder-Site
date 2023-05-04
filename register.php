@@ -110,6 +110,7 @@
                             </p>
                         </section>
                     </form>
+                    <p class="form-error">Please fill out all the required fields.</p>
                     <div class="form-redirects">
                         <p class="form-redirect">
                             <a href="login.html">Already have an account?</a>
@@ -153,9 +154,12 @@
                 console.log(currentTab + 1);
                 console.log(tabCount - 1);
                 if(!(currentTab + 1 >= tabCount) && !(currentTab + 1 < 0)) {
-                    toggleFormTab(currentTab);
-                    currentTab += 1;
-                    toggleFormTab(currentTab);
+                    // Check if valid.
+                    if(validateFormTab()) {
+                        toggleFormTab(currentTab);
+                        currentTab += 1;
+                        toggleFormTab(currentTab);
+                    }
                 }
             }
 
@@ -177,6 +181,35 @@
             backButtons.forEach((backButton) => {
                 backButton.addEventListener("click", backClickEvent);
             });
+
+            function validateFormTab() {
+                var formError = document.querySelector(".form-error");
+                var tabs = document.getElementsByClassName("form-tab");
+                var inputs = tabs[currentTab].getElementsByTagName("input");
+
+                // Check that each field is not empty.
+                var field;
+                var formIsValid = true;
+                for(field = 0; field < inputs.length; field++) {
+                    console.log("F:" + inputs[field].value);
+                    if(inputs[field].hasAttribute("required") && inputs[field].value == "") {
+                        inputs[field].classList.add("invalid-entry");
+                        formError.classList.add("active");
+                        formIsValid = false;
+                    } else {
+                        inputs[field].classList.remove("invalid-entry");
+                    }
+                }
+
+                if(formIsValid) {
+                    for(field = 0; field < inputs.length; field++) {
+                        inputs[field].classList.remove("invalid-entry");
+                    }
+                    formError.classList.remove("active");
+                }
+
+                return formIsValid;
+            }
 
         </script>
     </body>
