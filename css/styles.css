@@ -246,14 +246,20 @@
     border: 2px solid red;
 }
 
-.form-error {
+.form-warning {
     display: none;
 }
 
-.form-error.active {
+.form-warning.active {
     display: block;
     text-align: center;
     color: red;
+    font-family: "Open Source Pro", sans-serif;
+}
+
+.form-error {
+    color: red;
+    text-align: center;
     font-family: "Open Source Pro", sans-serif;
 }
 

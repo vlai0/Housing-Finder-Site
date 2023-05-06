@@ -1,3 +1,14 @@
+<?php
+    function getPostData($field) {
+        if(!isset($_POST[$field])) {
+            $data = "";
+        } else {
+            $data = trim($_POST[$field]);
+            $data = htmlspecialchars($data);
+        }
+        return $data;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,12 +48,11 @@
                 <li><a href="#" class="bullet">Log In</a></li>
             </ul>
         </nav>
-
-        <main class="login">
+        <main class="register">
             <div class="login-wrapper">
                 <section class="form-section">
                     <h2>Register</h2>
-                    <form class="login-form" action="" method="POST">
+                    <form class="login-form" action="" method="POST" enctype="multipart/form-data">
                         <section class="form-tab" id="form-tab-1">
                             <h3>Personal Information</h3>
                             <p class="form-element">
@@ -55,8 +65,8 @@
                             </p>
                             <p class="form-element">
                                 <label for="dateBirthdate">Birth Date</label>
-                                <input type="date" name="dateBirthdate" required>
-                            </p>
+                                <input type="date" name="dateBirthDate" required>
+                            </p>                        
                             <p class="form-element">
                                 <label for="selectGender">Gender Identity</label>
                                 <select name="selectGender" required>
@@ -110,7 +120,104 @@
                             </p>
                         </section>
                     </form>
-                    <p class="form-error">Please fill out all the required fields.</p>
+                    <?php
+                        if($_SERVER["REQUEST_METHOD"] === "POST") {
+                            /* ##### RETRIEVE DATA & SANITIZE ##### */
+                            // txtFirstName, txtLastName, dateBirthDate, selectGender, imgProfilePicture, txtDescription, txtUsername, txtEmail, txtPassword, txtConfirmPassword
+                            $firstName = getPostData("txtFirstName");
+                            $lastName = getPostData("txtLastName");
+                            $birthDate = isset($_POST["dateBirthDate"]) ? $_POST["dateBirthDate"] : "";
+                            $gender = getPostData("selectGender");
+                            $imageFile = basename($_FILES["imgProfilePicture"]["name"]);
+                            $imageFileType = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
+                            $username = getPostData("txtUsername");
+                            $email = getPostData("txtEmail");
+                            // Do not sanitize passwords. They will be hashed.
+                            $password = isset($_POST["txtPassword"]) ? $_POST["txtPassword"] : "";
+                            $passwordConfirmation = isset($_POST["txtConfirmPassword"]) ? $_POST["txtConfirmPassword"] : "";
+
+                            /* ##### VALIDATE DATA ##### */
+                            $validInput = true;
+                            $errorMessage = "";
+
+                            print_r($_POST);
+                            /* VALIDATE firstName AND lastName */
+                            if(strlen($firstName) <= 0 || $firstName == "") {
+                                $validInput = false;
+                                $errorMessage = "First name must contain at least 1 character.";
+                            }
+
+                            if($validInput && strlen($lastName) <= 0 || $lastName == "") {
+                                $validInput = false;
+                                $errorMessage = "Last name must contain at least 1 character.";
+                            }
+
+                            /* VALIDATE BIRTH DATE */
+                            // Check format.
+                            if($validInput && $birthDate != date("Y-m-d", strtotime($birthDate))) {
+                                $validInput = false;
+                                $errorMessage = "Birth date must be in the format YYYY-mm-dd.";
+                            }
+
+                            // Check date is before current date.
+                            if($validInput && date('Y-m-d', strtotime($birthDate)) > date("Y-m-d")) {
+                                $validInput = false;
+                                $errorMessage = "Birth date is not a valid date.";
+                            }
+
+                            /* VALIDATE GENDER IDENTITY */
+                            if($validInput && $gender != "Male" && $gender != "Female" && $gender != "Non-Binary" && $gender != "Gender Non-Conforming" && $gender != "Other") {
+                                $validInput = false;
+                                $errorMessage = "Please select a listed gender identity.";
+                            }
+
+                            /* VALIDATE PROFILE IMAGE */
+                            // Check if file type is jpeg/jpg or png.
+                            if($validInput && $imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
+                                $validInput = false;
+                                $errorMessage = "Profile image must be a jpg, jpeg, or png.";
+                            }
+
+                            // Check if file size is too large (cap at 2MB).
+                            if($validInput && $_FILES["imgProfilePicture"]["size"] > 2097152) {
+                                $validInput = false;
+                                $errorMessage = "Profile image is too large. Must be less than 2MB.";
+                            }
+
+                            /* VALIDATE USERNAME */
+                            // Check at least 3 characters.
+                            if($validInput && strlen($username) < 3) {
+                                $validInput = false;
+                                $errorMessage = "Username too short. Must be at least 3 characters in length.";
+                            }
+
+                            // Check greater than 32 characters.
+                            if($validInput && strlen($username) > 32) {
+                                $validInput = false;
+                                $errorMessage = "Username too long. Please make it at most 32 characters in length.";
+                            }
+
+                            // Check if already in use.
+
+                            /* VALIDATE PASSWORD */
+                            // Verify password is at least 6 characters in length.
+                            if($validInput && strlen($password) < 6) {
+                                $validInput = false;
+                                $errorMessage = "Password too short. Must be at least 6 characters in length.";
+                            }
+
+                            // Verify password matches confirmation password.
+                            if($validInput && $password != $passwordConfirmation) {
+                                $validInput = false;
+                                $errorMessage = "Passwords do not match.";
+                            }
+
+                            /* Print Error Message */
+                            echo $validInput;
+                            print "<p class=\"form-error\">".$errorMessage."</p>";
+                        }
+                    ?> 
+                    <p class="form-warning">Please fill out all the required fields.</p>
                     <div class="form-redirects">
                         <p class="form-redirect">
                             <a href="login.html">Already have an account?</a>
@@ -183,7 +290,7 @@
             });
 
             function validateFormTab() {
-                var formError = document.querySelector(".form-error");
+                var formError = document.querySelector(".form-warning");
                 var tabs = document.getElementsByClassName("form-tab");
                 var inputs = tabs[currentTab].getElementsByTagName("input");
 
