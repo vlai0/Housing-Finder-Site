@@ -121,6 +121,8 @@
                         </section>
                     </form>
                     <?php
+                        include 'connect-DB.php';
+
                         if($_SERVER["REQUEST_METHOD"] === "POST") {
                             /* ##### RETRIEVE DATA & SANITIZE ##### */
                             // txtFirstName, txtLastName, dateBirthDate, selectGender, imgProfilePicture, txtDescription, txtUsername, txtEmail, txtPassword, txtConfirmPassword
@@ -130,6 +132,7 @@
                             $gender = getPostData("selectGender");
                             $imageFile = basename($_FILES["imgProfilePicture"]["name"]);
                             $imageFileType = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
+                            $description = getPostData("txtDescription");
                             $username = getPostData("txtUsername");
                             $email = getPostData("txtEmail");
                             // Do not sanitize passwords. They will be hashed.
@@ -142,12 +145,12 @@
 
                             print_r($_POST);
                             /* VALIDATE firstName AND lastName */
-                            if(strlen($firstName) <= 0 || $firstName == "") {
+                            if(strlen($firstName) == 0 || $firstName == "") {
                                 $validInput = false;
                                 $errorMessage = "First name must contain at least 1 character.";
                             }
 
-                            if($validInput && strlen($lastName) <= 0 || $lastName == "") {
+                            if($validInput && strlen($lastName) == 0 || $lastName == "") {
                                 $validInput = false;
                                 $errorMessage = "Last name must contain at least 1 character.";
                             }
@@ -173,6 +176,7 @@
 
                             /* VALIDATE PROFILE IMAGE */
                             // Check if file type is jpeg/jpg or png.
+                            echo $imageFileType;
                             if($validInput && $imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
                                 $validInput = false;
                                 $errorMessage = "Profile image must be a jpg, jpeg, or png.";
@@ -198,6 +202,37 @@
                             }
 
                             // Check if already in use.
+                            if($validInput) {
+                                $sql = "SELECT pmkUsername FROM tblUser ";
+                                $sql .= "WHERE pmkUsername = ?";
+                                $data = array($username);
+                                $results = $thisDatabaseReader->select($sql, $data);
+
+                                if(!empty($results)) {
+                                    $validInput = false;
+                                    $errorMessage = "The username ".$username." is already taken.";
+                                }    
+                            }
+                            
+                            /* VALIDATE EMAIL */
+                            // Check if email is valid format.
+                            if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                $validInput = false;
+                                $errorMessage = "Email is not valid.";
+                            }
+
+                            // Check if already in use.
+                            if($validInput) {
+                                $sql = "SELECT fldEmail FROM tblUser ";
+                                $sql .= "WHERE fldEmail = ?";
+                                $data = array($email);
+                                $results = $thisDatabaseReader->select($sql, $data);
+    
+                                if(!empty($results)) {
+                                    $validInput = false;
+                                    $errorMessage = "This email is already in use.";
+                                }    
+                            }
 
                             /* VALIDATE PASSWORD */
                             // Verify password is at least 6 characters in length.
@@ -212,9 +247,26 @@
                                 $errorMessage = "Passwords do not match.";
                             }
 
-                            /* Print Error Message */
-                            echo $validInput;
-                            print "<p class=\"form-error\">".$errorMessage."</p>";
+                            // Insert into Users table if valid inputs; otherwise, print error.
+                            $DEBUG = false;
+                            if($validInput && $DEBUG == false) {
+                                // Add profile photo to profile images path and rename to standardized name.
+                                $profileImagePath = "images/profiles/".$imageFile;
+                                $standardizedImagePath = "images/profiles/profile_".$username.".png";
+                                move_uploaded_file($_FILES["imgProfilePicture"]["tmp_name"], $profileImagePath);
+                                rename($profileImagePath, $standardizedImagePath);
+
+                                // Hash password.
+                                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                        
+                                $sql = "INSERT INTO tblUser (pmkUsername, fldPasswordHash, fldEmail, fldFirstName, fldLastName, fldBirthDate, fldGender, fldDescription, fldProfileImagePath) ";
+                                $sql .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                $data = array($username, $passwordHash, $email, $firstName, $lastName, $birthDate, $gender, $description, $standardizedImagePath);
+                                $thisDatabaseWriter->insert($sql, $data);
+                            } else {
+                                /* Print Error Message */
+                                print "<p class=\"form-error\">".$errorMessage."</p>";
+                            }
                         }
                     ?> 
                     <p class="form-warning">Please fill out all the required fields.</p>
