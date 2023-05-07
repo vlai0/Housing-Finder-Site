@@ -52,75 +52,20 @@
             <div class="login-wrapper">
                 <section class="form-section">
                     <h2>Register</h2>
-                    <form class="login-form" action="" method="POST" enctype="multipart/form-data">
-                        <section class="form-tab" id="form-tab-1">
-                            <h3>Personal Information</h3>
-                            <p class="form-element">
-                                <label for="txtFirstName">First Name</label>
-                                <input type="text" name="txtFirstName" placeholder="Enter First Name" required>
-                            </p>
-                            <p class="form-element">
-                                <label for="txtLastName">Last Name</label>
-                                <input type="text" name="txtLastName" placeholder="Enter Last Name" required>
-                            </p>
-                            <p class="form-element">
-                                <label for="dateBirthdate">Birth Date</label>
-                                <input type="date" name="dateBirthDate" required>
-                            </p>                        
-                            <p class="form-element">
-                                <label for="selectGender">Gender Identity</label>
-                                <select name="selectGender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Non-Binary">Non-Binary</option>
-                                    <option value="Gender Non-Conforming">Gender Non-Conforming</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </p>
-                            <p class="form-element form-buttons">
-                                <button class="form-next-button" type="button">Next ></button>
-                            </p>
-                        </section>
-                        <section class="form-tab" id="form-tab-2">
-                            <h3>Tell People About Yourself</h3>
-                            <p class="form-element">
-                                <label for="imgProfilePicture">Add a Profile Picture</label>
-                                <input type="file" name="imgProfilePicture" accept="image/png, image/jpeg">
-                            </p>
-                            <p class="form-element">
-                                <label for="txtDescription">About You</label>
-                                <textarea cols="4" rows="5" maxlength="1000" name="txtDescription"></textarea>
-                            </p>
-                            <p class="form-element form-buttons">
-                                <button class="form-back-button" type="button">< Back</button>
-                                <button class="form-next-button" type="button">Next ></button>
-                            </p>
-                        </section>
-                        <section class="form-tab" id="form-tab-3">
-                            <h3>Login Information</h3>
-                            <p class="form-element">
-                                <label for="txtUsername">Username</label>
-                                <input type="text" name="txtUsername" placeholder="Enter Username" required>
-                            </p>
-                            <p class="form-element">
-                                <label for="txtEmail">Email</label>
-                                <input type="text" name="txtEmail" placeholder="Enter Email" required>
-                            </p>
-                            <p class="form-element">
-                                <label for="txtPassword">Password</label>
-                                <input type="password" name="txtPassword" placeholder="Enter Password" required>
-                            </p>
-                            <p class="form-element">
-                                <label for="txtConfirmPassword">Confirm Password</label>
-                                <input type="password" name="txtConfirmPassword" placeholder="Confirm Password" required>
-                            </p>
-                            <p class="form-element form-buttons">
-                                <button class="form-back-button" type="button">< Back</button>
-                                <button type="submit">Register</button>
-                            </p>
-                        </section>
-                    </form>
                     <?php
+                        /* INITIALIZE DEFAULT FORM VALUES */
+                        $firstName = "";
+                        $lastName = "";
+                        $birthDate = "";
+                        $gender = "";
+                        $imageFile = "";
+                        $imageFileType = "";
+                        $description = "";
+                        $username = "";
+                        $email = "";
+
+                        $errorMessage = "";
+
                         include 'connect-DB.php';
 
                         if($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -145,7 +90,6 @@
 
                             /* ##### VALIDATE DATA ##### */
                             $validInput = true;
-                            $errorMessage = "";
 
                             print_r($_POST);
                             /* VALIDATE firstName AND lastName */
@@ -290,10 +234,81 @@
                                 $sql .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                                 $data = array($username, $passwordHash, $email, $firstName, $lastName, $birthDate, $gender, $description, $standardizedImagePath);
                                 $thisDatabaseWriter->insert($sql, $data);
-                            } else {
-                                /* Print Error Message */
-                                print "<p class=\"form-error\">".$errorMessage."</p>";
                             }
+                        }
+                    ?>
+                    <form class="login-form" action="" method="POST" enctype="multipart/form-data">
+                        <section class="form-tab" id="form-tab-1">
+                            <h3>Personal Information</h3>
+                            <p class="form-element">
+                                <label for="txtFirstName">First Name</label>
+                                <input type="text" name="txtFirstName" placeholder="Enter First Name" value="<?php if($firstName != "") { print $firstName; } ?>" required>
+                            </p>
+                            <p class="form-element">
+                                <label for="txtLastName">Last Name</label>
+                                <input type="text" name="txtLastName" placeholder="Enter Last Name" value="<?php if($lastName != "") { print $lastName; } ?>" required>
+                            </p>
+                            <p class="form-element">
+                                <label for="dateBirthdate">Birth Date</label>
+                                <input type="date" name="dateBirthDate" value="<?php if($birthDate != "") { print $birthDate; } ?>" required>
+                            </p>                        
+                            <p class="form-element">
+                                <label for="selectGender">Gender Identity</label>
+                                <select name="selectGender" required>
+                                    <option value="Other" <?php if($gender == "Other") { print " selected "; } ?>>Other</option>
+                                    <option value="Male" <?php if($gender == "Male") { print " selected "; } ?>>Male</option>
+                                    <option value="Female" <?php if($gender == "Female") { print " selected "; } ?>>Female</option>
+                                    <option value="Non-Binary" <?php if($gender == "Non-Binary") { print " selected "; } ?>>Non-Binary</option>
+                                    <option value="Gender Non-Conforming" <?php if($gender == "Gender Non-Conforming") { print " selected "; } ?>>Gender Non-Conforming</option>
+                                </select>
+                            </p>
+                            <p class="form-element form-buttons">
+                                <button class="form-next-button" type="button">Next ></button>
+                            </p>
+                        </section>
+                        <section class="form-tab" id="form-tab-2">
+                            <h3>Tell People About Yourself</h3>
+                            <p class="form-element">
+                                <label for="imgProfilePicture">Add a Profile Picture</label>
+                                <input type="file" name="imgProfilePicture" accept="image/png, image/jpeg">
+                            </p>
+                            <p class="form-element">
+                                <label for="txtDescription">About You</label>
+                                <textarea cols="4" rows="5" maxlength="1000" name="txtDescription" value="<?php if($description != "") { print $description; } ?>"></textarea>
+                            </p>
+                            <p class="form-element form-buttons">
+                                <button class="form-back-button" type="button">< Back</button>
+                                <button class="form-next-button" type="button">Next ></button>
+                            </p>
+                        </section>
+                        <section class="form-tab" id="form-tab-3">
+                            <h3>Login Information</h3>
+                            <p class="form-element">
+                                <label for="txtUsername">Username</label>
+                                <input type="text" name="txtUsername" placeholder="Enter Username" value="<?php if($username != "") { print $username; } ?>" required>
+                            </p>
+                            <p class="form-element">
+                                <label for="txtEmail">Email</label>
+                                <input type="text" name="txtEmail" placeholder="Enter Email" value="<?php if($email != "") { print $email; } ?>" required>
+                            </p>
+                            <p class="form-element">
+                                <label for="txtPassword">Password</label>
+                                <input type="password" name="txtPassword" placeholder="Enter Password" required>
+                            </p>
+                            <p class="form-element">
+                                <label for="txtConfirmPassword">Confirm Password</label>
+                                <input type="password" name="txtConfirmPassword" placeholder="Confirm Password" required>
+                            </p>
+                            <p class="form-element form-buttons">
+                                <button class="form-back-button" type="button">< Back</button>
+                                <button type="submit">Register</button>
+                            </p>
+                        </section>
+                    </form>
+                    <?php
+                        /* Print Error Message */
+                        if($errorMessage != "") {
+                            print "<p class=\"form-error\">".$errorMessage."</p>";
                         }
                     ?> 
                     <p class="form-warning">Please fill out all the required fields.</p>
