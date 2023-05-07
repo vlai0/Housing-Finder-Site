@@ -89,7 +89,7 @@
                             </p>
                             <p class="form-element">
                                 <label for="txtDescription">About You</label>
-                                <textarea cols="4" rows="5" maxlength="500" name="txtDescription"></textarea>
+                                <textarea cols="4" rows="5" maxlength="1000" name="txtDescription"></textarea>
                             </p>
                             <p class="form-element form-buttons">
                                 <button class="form-back-button" type="button">< Back</button>
@@ -130,8 +130,12 @@
                             $lastName = getPostData("txtLastName");
                             $birthDate = isset($_POST["dateBirthDate"]) ? $_POST["dateBirthDate"] : "";
                             $gender = getPostData("selectGender");
-                            $imageFile = basename($_FILES["imgProfilePicture"]["name"]);
-                            $imageFileType = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
+                            $imageFile = "";
+                            $imageFileType = "";
+                            if(is_uploaded_file($_FILES["imgProfilePicture"]["tmp_name"])) {
+                                $imageFile = basename($_FILES["imgProfilePicture"]["name"]);
+                                $imageFileType = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
+                            }
                             $description = getPostData("txtDescription");
                             $username = getPostData("txtUsername");
                             $email = getPostData("txtEmail");
@@ -157,13 +161,26 @@
 
                             /* VALIDATE BIRTH DATE */
                             // Check format.
+                            $birthDateObj;
                             if($validInput && $birthDate != date("Y-m-d", strtotime($birthDate))) {
                                 $validInput = false;
                                 $errorMessage = "Birth date must be in the format YYYY-mm-dd.";
+                            } else {
+                                // Create birthDateObj if valid.
+                                $birthDateObj = new DateTimeImmutable($birthDate);
                             }
 
-                            // Check date is before current date.
-                            if($validInput && date('Y-m-d', strtotime($birthDate)) > date("Y-m-d")) {
+                            // Check date is before current date (based on UTC) and after minimum possible date.
+                            $currentDate = new DateTimeImmutable("now");
+                            $currentYear = $currentDate->format("Y");
+                            $firstOfCurrentYearString = $currentYear."-01-01";
+                            $firstOfCurrentYear = new DateTimeImmutable($firstOfCurrentYearString); 
+                            echo $firstOfCurrentYear->format("Y-m-d").PHP_EOL;
+                            $oldestAllowedDate = $firstOfCurrentYear->modify('-130 year');
+                            echo $oldestAllowedDate->format("Y-m-d").PHP_EOL;
+                            echo $firstOfCurrentYear->diff($oldestAllowedDate)->s.PHP_EOL;
+                            if($validInput && $birthDateObj > $currentDate || $birthDateObj < $oldestAllowedDate) {
+                                echo "WASSUP";
                                 $validInput = false;
                                 $errorMessage = "Birth date is not a valid date.";
                             }
@@ -175,17 +192,27 @@
                             }
 
                             /* VALIDATE PROFILE IMAGE */
-                            // Check if file type is jpeg/jpg or png.
-                            echo $imageFileType;
-                            if($validInput && $imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
-                                $validInput = false;
-                                $errorMessage = "Profile image must be a jpg, jpeg, or png.";
+                            // Check that profile image was actually uploaded.
+                            if($imageFile != "" && $imageFileType != "") {
+                                // Check if file type is jpeg/jpg or png.
+                                echo $imageFileType;
+                                if($validInput && $imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
+                                    $validInput = false;
+                                    $errorMessage = "Profile image must be a jpg, jpeg, or png.";
+                                }
+
+                                // Check if file size is too large (cap at 2MB).
+                                if($validInput && $_FILES["imgProfilePicture"]["size"] > 2097152) {
+                                    $validInput = false;
+                                    $errorMessage = "Profile image is too large. Must be less than 2MB.";
+                                }
                             }
 
-                            // Check if file size is too large (cap at 2MB).
-                            if($validInput && $_FILES["imgProfilePicture"]["size"] > 2097152) {
+                            /* VALIDATE DESCRIPTION */
+                            // Check description does not exceed 1,000 character.
+                            if($validInput && strlen($description) > 1000) {
                                 $validInput = false;
-                                $errorMessage = "Profile image is too large. Must be less than 2MB.";
+                                $errorMessage = "Description cannot exceed 1,000 characters.";
                             }
 
                             /* VALIDATE USERNAME */
