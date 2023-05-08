@@ -222,10 +222,13 @@
                             $DEBUG = false;
                             if($validInput && $DEBUG == false) {
                                 // Add profile photo to profile images path and rename to standardized name.
-                                $profileImagePath = "images/profiles/".$imageFile;
-                                $standardizedImagePath = "images/profiles/profile_".$username.".png";
-                                move_uploaded_file($_FILES["imgProfilePicture"]["tmp_name"], $profileImagePath);
-                                rename($profileImagePath, $standardizedImagePath);
+                                $standardizedImagePath = NULL;
+                                if($imageFile != "" && $imageFileType != "") {
+                                    $profileImagePath = "images/profiles/".$imageFile;
+                                    $standardizedImagePath = "images/profiles/profile_".$username.".png";
+                                    move_uploaded_file($_FILES["imgProfilePicture"]["tmp_name"], $profileImagePath);
+                                    rename($profileImagePath, $standardizedImagePath);
+                                }
 
                                 // Hash password.
                                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
@@ -330,7 +333,7 @@
                             </p>
                             <p class="form-element">
                                 <label for="txtDescription">About You</label>
-                                <textarea cols="4" rows="5" maxlength="1000" name="txtDescription" value="<?php if($description != "") { print $description; } ?>"></textarea>
+                                <textarea cols="4" rows="5" maxlength="1000" name="txtDescription"><?php if($description != "") { print $description; } ?></textarea>
                             </p>
                             <p class="form-element form-buttons">
                                 <button class="form-back-button" type="button">< Back</button>
