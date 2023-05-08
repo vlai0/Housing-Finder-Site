@@ -467,7 +467,11 @@ main h2:not(.hero-banner h2) {
     
 }
 
-.fldCampus, .fldComplex, .fldRoomSize, .fldBathroom, .fldMin, .fldMax, .separator, .fldNumBedroom, .fldNumBathroom, .fldLocation{
+.search-filters legend{
+    font-size: 1.15em;
+}
+
+.fldCampus, .fldComplex, .fldRoomSize, .fldBathroom, .fldMin, .fldMax, .separator, .fldNumBedroom, .fldNumBathroom, .fldLocation, .fldAmenities{
     display: inline-block;
     font-family: "Inter", sans-serif;
     padding: 0.5rem;    
@@ -476,7 +480,7 @@ main h2:not(.hero-banner h2) {
 .search-filters select, input{
     border: none;
     padding: 0.5rem;
-    font-size: 1em;
+    font-size: .9em;
 }
 
 /* Getting rid of arrows in number input field*/
