@@ -250,7 +250,7 @@
                                                 <tr>
                                                     <td>
                                                         <p><strong>Hello <span style=\"color: #66AC47\">".$firstName."</span>,</strong></p>
-                                                        <p>Welcome and thank you for registering an account with <a href=\"astem.w3.uvm.edu/cs148/live-final\">UVM Housing Finder</a>.</p>
+                                                        <p>Welcome and thank you for registering an account with <a href=\"https://astem.w3.uvm.edu/cs148/live-final\">UVM Housing Finder</a>.</p>
                                                         <p><strong>Your account has been successfully created</strong>, and you can now log in using your username or email and your password.</p>
                                                     </td>
                                                 </tr>
