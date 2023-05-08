@@ -8,57 +8,6 @@
         }
         return $data;
     }
-
-    $to = "anthony_stem@outlook.com";
-    $subject = "Welcome to UVM Housing Finder!";
-    $message = "
-    <html>
-        <head>
-            <title>Welcome to UVM Housing Finder!</title>
-        </head>
-        <body style=\"font-family: Arial, sans-serif\">
-            <h1>Welcome to the UVM Housing Finder!</h1>
-            <table cellpadding=\"5\">
-                <tr>
-                    <td>
-                        <p><strong>Hello <span style=\"color: #66AC47\">Anthony</span>,</strong></p>
-                        <p>Welcome and thank you for registering an account with <a href=\"astem.w3.uvm.edu/cs148/live-final\">UVM Housing Finder</a>.</p>
-                        <p><strong>Your account has been successfully created</strong>, and you can now log in using your username or email and your password.</p>
-                    </td>
-                </tr>
-                <tr style=\"background-color: #EFEFEF;\">
-                    <td>
-                        <p style=\"width: 100%; text-align: center;\"><a href=\"https://astem.w3.uvm.edu/cs148/live-final/login.php\" style=\"border-radius: 4px; background-color: #F47D20; color: white; padding: 1rem 2rem 1rem 2rem;  text-decoration: underline; font-weight: bold; text-transform: uppercase;\">Login</a></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>Whether you may be searching for a dorm, an apartment, or the perfect roommate, we hope that UVM Housing Finder serves you well!</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>Best Regards,</p>
-                        <p>UVM Housing Finder</p>
-                    </td>
-                </tr>
-            </table>        
-            <hr>
-            <table>
-                <tr>
-                    <td>
-                        <p>If you have any questions or need assistance, reach out to the support team at <a href=\"mailto:anthony.stem@uvm.edu\">anthony.stem@uvm.edu</a>.</p>
-                    </td>
-                </tr>
-            </table>
-        </body>
-    </html>
-    ";
-
-    $headers = "MIME-Version: 1.0" . "\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    
-    mail($to, $subject, $message, $headers);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -288,19 +237,52 @@
 
                                 // Email the user if registration is successful.
                                 if($success) {
-                                    $to = "anthony_stem@outlook.com";
+                                    $to = $email;
                                     $subject = "Welcome to UVM Housing Finder!";
                                     $message = "
                                     <html>
                                         <head>
                                             <title>Welcome to UVM Housing Finder!</title>
                                         </head>
-                                        <body>
-                                            <p>Test email</p>
+                                        <body style=\"font-family: Arial, sans-serif\">
+                                            <h1>Welcome to the UVM Housing Finder!</h1>
+                                            <table cellpadding=\"5\">
+                                                <tr>
+                                                    <td>
+                                                        <p><strong>Hello <span style=\"color: #66AC47\">".$firstName."</span>,</strong></p>
+                                                        <p>Welcome and thank you for registering an account with <a href=\"astem.w3.uvm.edu/cs148/live-final\">UVM Housing Finder</a>.</p>
+                                                        <p><strong>Your account has been successfully created</strong>, and you can now log in using your username or email and your password.</p>
+                                                    </td>
+                                                </tr>
+                                                <tr style=\"background-color: #EFEFEF;\">
+                                                    <td>
+                                                        <p style=\"width: 100%; text-align: center;\"><a href=\"https://astem.w3.uvm.edu/cs148/live-final/login.php\" style=\"border-radius: 4px; background-color: #F47D20; color: white; padding: 1rem 2rem 1rem 2rem;  text-decoration: underline; font-weight: bold; text-transform: uppercase;\">Login</a></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Whether you may be searching for a dorm, an apartment, or the perfect roommate, we hope that UVM Housing Finder serves you well!</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Best Regards,</p>
+                                                        <p>UVM Housing Finder</p>
+                                                    </td>
+                                                </tr>
+                                            </table>        
+                                            <hr>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <p>If you have any questions or need assistance, reach out to the support team at <a href=\"mailto:anthony.stem@uvm.edu\">anthony.stem@uvm.edu</a>.</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </body>
                                     </html>
                                     ";
-
+                                
                                     $headers = "MIME-Version: 1.0" . "\r\n";
                                     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
                                     
