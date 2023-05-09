@@ -37,9 +37,8 @@
                 <li><a href="login.html" class="bullet">Log In</a></li>
             </ul>
         </nav>
-
+        <main class="login">
         <?php
-
             function getPostData($field) {
                 if(!isset($_POST[$field])) {
                     $data = "";
@@ -122,7 +121,6 @@
                         // Check token is not expired (must be used within 5 minutes).
                         if($timestamp->diff($currentTimestamp)->i < 5) {
                             print "
-                                <main class=\"login\">
                                 <div class=\"login-wrapper\">
                                     <section class=\"form-section\">
                                         
@@ -155,23 +153,17 @@
                             print "
                                     </section>
                                 </div>
-                            </main>
                             ";
+                        } else {
+                            print "<h2>Your password reset token has expired!</h2>";
                         }
                     }      
                 } else {
                     print "<h2>Your password reset token has expired!</h2>";
                 }
             }
-
-
-            // Check if token is expired/doesn't exist.
-
-            // Find user in db from token.
-            
-
-
         ?>
+        </main>
 
         <footer>
             <section class="footer-section">
