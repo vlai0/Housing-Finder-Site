@@ -33,12 +33,12 @@
             ?>"
          href="apartmentlistings.php">Find an Apartment</a>
         </li>
-        <li><a class="<?php 
+        <li><a class="bullet <?php 
             if(PATH_PARTS['filename'] == "login") { 
                 print 'active-page';
             }
             ?>" 
-            href="login.php" class="bullet">Log In</a>
+            href="login.php">Log In</a>
         </li>
     </ul>
 </nav>

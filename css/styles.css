@@ -268,7 +268,7 @@ main h2:not(.hero-banner h2) {
 .form-section {
     border-radius: 4px;
     background-color: white;
-    max-width: 32rem;
+    max-width: 18rem;
     padding-top: 2rem;
     padding-left: 1rem;
     padding-right: 1rem;
