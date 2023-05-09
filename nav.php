@@ -12,9 +12,33 @@
         <?php include "header.php"; ?>
     </div>
     <ul class="navigation-links">
-        <li><a href="index.php">Home</a></li>
-        <li><a href="dormitorylistings.php">Dorm Roommate Requests</a></li>
-        <li><a href="apartmentlistings.php">Find an Apartment</a></li>
-        <li><a href="login.php" class="bullet">Log In</a></li>
+        <li><a class="<?php 
+            if(PATH_PARTS['filename'] == "index") { 
+                print 'active-page';
+            }
+            ?>" 
+            href="index.php">Home</a>
+        </li>
+        <li><a class="<?php 
+            if(PATH_PARTS['filename'] == "dormitorylistings") { 
+                print 'active-page';
+            }
+            ?>" 
+            href="dormitorylistings.php">Dorm Roommate Requests</a>
+        </li>
+        <li><a class="<?php 
+            if(PATH_PARTS['filename'] == "apartmentlistings") { 
+                print 'active-page';
+            }
+            ?>"
+         href="apartmentlistings.php">Find an Apartment</a>
+        </li>
+        <li><a class="<?php 
+            if(PATH_PARTS['filename'] == "login") { 
+                print 'active-page';
+            }
+            ?>" 
+            href="login.php" class="bullet">Log In</a>
+        </li>
     </ul>
 </nav>

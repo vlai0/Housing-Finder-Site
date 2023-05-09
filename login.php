@@ -11,7 +11,7 @@
                     <input type="text" name="txtUsername" placeholder="Enter Your Username" required>
                 </p>
                 <p class="form-element">
-                    <label for="txtPassword">Password</label>
+                    <label for="txtPassword">Password <a href="forgotpassword.php">(Forgot?)</a></label>
                     <input type="password" name="txtPassword" placeholder="Enter Your Password" required>
                 </p>
                 <p class="form-element">
@@ -50,10 +50,7 @@
             ?>
             <div class="form-redirects">
                 <p class="form-redirect">
-                    <a href="register.php">Don't have an account?</a>
-                </p>
-                <p class="form-redirect">
-                    <a href="forgotpassword.php">Forgot your password?</a>
+                    Don't have an account? <a href="register.php">Register</a>
                 </p>
             </div>
         </section>

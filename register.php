@@ -335,7 +335,7 @@
             <p class="form-warning">Please fill out all the required fields.</p>
             <div class="form-redirects">
                 <p class="form-redirect">
-                    <a href="login.php">Already have an account?</a>
+                    Already have an account? <a href="login.php">Log In</a>
                 </p>
             </div>
         </section>
