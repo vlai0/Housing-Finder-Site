@@ -21,8 +21,8 @@
             <?php
                 if($_SERVER["REQUEST_METHOD"] === "POST") {
 
-                    $username = $_POST["txtUsername"];
-                    $password = $_POST["txtPassword"];
+                    $username = getPostData("txtUsername");
+                    $password = getPostData("txtPassword");
 
                     $query = "SELECT fldPasswordHash FROM tblUser ";
                     $query .= "WHERE pmkUsername = ?";

@@ -27,8 +27,6 @@
                     $lastName = getPostData("txtLastName");
                     $birthDate = isset($_POST["dateBirthDate"]) ? $_POST["dateBirthDate"] : "";
                     $gender = getPostData("selectGender");
-                    $imageFile = "";
-                    $imageFileType = "";
                     if(is_uploaded_file($_FILES["imgProfilePicture"]["tmp_name"])) {
                         $imageFile = basename($_FILES["imgProfilePicture"]["name"]);
                         $imageFileType = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
@@ -36,6 +34,8 @@
                     $description = getPostData("txtDescription");
                     $username = getPostData("txtUsername");
                     $email = getPostData("txtEmail");
+                    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
                     // Do not sanitize passwords. They will be hashed.
                     $password = isset($_POST["txtPassword"]) ? $_POST["txtPassword"] : "";
                     $passwordConfirmation = isset($_POST["txtConfirmPassword"]) ? $_POST["txtConfirmPassword"] : "";
@@ -92,13 +92,14 @@
                     }
 
                     /* VALIDATE GENDER IDENTITY */
-                    if($validInput && $gender != "Male" && $gender != "Female" && $gender != "Non-Binary" && $gender != "Gender Non-Conforming" && $gender != "Other") {
+                    $genderOptions = array("Male", "Female", "Non-Binary", "Gender Non-Conforming", "Other");
+                    if($validInput && ) {
                         $validInput = false;
                         $errorMessage = "Please select a listed gender identity.";
                     }
 
                     /* VALIDATE PROFILE IMAGE */
-                    // Check that profile image was actually uploaded.
+                    // Check if profile image was uploaded. If uploaded, validate.
                     if($imageFile != "" && $imageFileType != "") {
                         // Check if file type is jpeg/jpg or png.
                         echo $imageFileType;
@@ -115,14 +116,14 @@
                     }
 
                     /* VALIDATE DESCRIPTION */
-                    // Check description does not exceed 1,000 character.
+                    // Check description does not exceed 1,000 characters.
                     if($validInput && strlen($description) > 1000) {
                         $validInput = false;
                         $errorMessage = "Description cannot exceed 1,000 characters.";
                     }
 
                     /* VALIDATE USERNAME */
-                    // Check at least 3 characters.
+                    // Check contains at least 3 characters.
                     if($validInput && strlen($username) < 3) {
                         $validInput = false;
                         $errorMessage = "Username too short. Must be at least 3 characters in length.";
@@ -134,7 +135,7 @@
                         $errorMessage = "Username too long. Please make it at most 32 characters in length.";
                     }
 
-                    // Check if already in use.
+                    // Check if username is already in use.
                     if($validInput) {
                         $sql = "SELECT pmkUsername FROM tblUser ";
                         $sql .= "WHERE pmkUsername = ?";
@@ -149,7 +150,7 @@
                     
                     /* VALIDATE EMAIL */
                     // Check if email is valid format.
-                    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    if($validInput && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         $validInput = false;
                         $errorMessage = "Email is not valid.";
                     }
