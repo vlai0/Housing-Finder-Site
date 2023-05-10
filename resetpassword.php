@@ -119,7 +119,6 @@
     include "footer.php";
 ?>
 
-        <!-- Main/Unique Section -->
         <script>
             // Handle Navigation Hamburger Button.
             const hamburgerButton = document.querySelector(".hamburger-button");

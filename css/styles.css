@@ -265,6 +265,14 @@ main h2:not(.hero-banner h2) {
 
 }
 
+.form-option {
+    display: none;
+}
+
+.selected-form {
+    display: block;
+}
+
 .form-section {
     border-radius: 4px;
     background-color: white;
@@ -652,6 +660,10 @@ footer a:hover {
     padding-bottom: 1rem;
 }
 
+/* ########## NEW LISTING POST FORM PAGE ########## */
+.new-post hr {
+    margin-bottom: 1rem;
+}
 
 /* ########## Media Queries & Breakpoints ########## */
 @media (min-width: 992px) {
