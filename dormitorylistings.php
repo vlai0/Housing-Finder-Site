@@ -19,9 +19,15 @@
 
                     $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
                     $sql .= "JOIN tblDormitoryListing ON pmkListingId = fnkListingId ";
-                    $sql .= "WHERE fldCampus = ? ";
-                    $sql .= "AND fldComplex = ? ";
-                    $sql .= "AND fldRoomType = ? ";
+                    if ($listCampuses != "No Pref"){
+                        $sql .= "WHERE fldCampus = ? ";
+                    }
+                    if ($listComplexes != "Any"){
+                        $sql .= "AND fldComplex = ? ";
+                    }
+                    if ($listRoomSizes != "Any"){
+                        $sql .= "AND fldRoomType = ? ";
+                    }
                     $sql .= "AND fldHasPrivateBathroom = ? ";
                     $data = array($listCampuses, $listComplexes, $listRoomSizes, $chkBathroom);
                     $results = $thisDatabaseReader->select($sql, $data);
@@ -37,10 +43,10 @@
                         foreach ($results as $listing){
                             print '<div class="search-listing">';
                             print '<div class="search-listing-thumbnail">';
-                                print '<img src="images/listings/dormitory_listings/.$listingId/.$listingId._1.png">';
+                            print '<img src="images/listings/dormitory_listings/'.$listingId.'/'.$listingId.'_1.png">';
                             print '</div>';
                             print '<section class="search-listing-header">';
-                                print '<h3>$listingTitle</h3>';
+                                print '<h3>'.$listingTitle.'</h3>';
                                 print '<button><a href="listing.php">View</a></button>';
                             print '</section>';
                         print '</div>';

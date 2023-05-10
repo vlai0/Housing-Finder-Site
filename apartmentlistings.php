@@ -25,35 +25,62 @@
 
                 if($numMin != "" && $numMax != "" && $listBedrooms != "" && $listBathrooms != "" && $listLocations != "") {
 
-                    $sql = "SELECT fldListingId FROM tblListing";
+                    $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing";
                     $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
                     $sql .= "WHERE fldRent >= ?";
                     $sql .= "AND fldRent <= ?";
                     if ($listBedrooms != 1 && $listBedrooms != 2 && $listBedrooms != 3){
                         $sql .= "AND fldBedrooms >= 4";
                     }
-                    else{
+                    else if ($listBedrooms != "No Pref") {
                         $sql .= "AND fldBedrooms = ?";
                     }
                     if ($listBathrooms != 1 && $listBathrooms != 2 && $listBathrooms != 3){
-                        $sql .= "AND fldBedrooms >= 4";
+                        $sql .= "AND fldBathrooms >= 4";
                     }
-                    else{
+                    else if ($listBathrooms != "No Pref"){
                         $sql .= "AND fldBathrooms = ?";
                     }
-                    $sql .= "AND fldTowns = ?";
+                    if ($listLocations != "Any"){
+                        $sql .= "AND fldTowns = ?";
+                    }
                     $sql .= "AND fldHasAirConditioning = ?";
                     $sql .= "AND fldHasLaundry = ?";
                     $sql .= "AND fldHasParking = ?";
                     $sql .= "AND fldHasDishwasher = ?";
-                    $sql .= "AND fldHasInternet = ?"
+                    $sql .= "AND fldHasInternet = ?";
                     $data = array($numMin, $numMax, $listBedrooms, $listBathrooms, $listLocations, $chkAC, $chkLaundry, $chkParking, $chkDishwasher, $chkInternet);
                     $results = $thisDatabaseReader->select($sql, $data);
+
+                    if(!empty($results)) {
+                        $listingId = $results[0]["pmkListingId"];
+                        $listingTitle = $results[0]["fldListingTitle"];
+                        print "
+                        <section class=\"search-listing-wrapper\">
+                        <h2>Dormitory Listings</h2>
+                        <div class=\"search-listings\">
+                            <div class=\"search-listing\">";
+                        foreach ($results as $listing){
+                            print '<div class="search-listing">';
+                            print '<div class="search-listing-thumbnail">';
+                                print '<img src="images/listings/apartment_listings/'.$listingId.'/'.$listingId.'_1.png">';
+                            print '</div>';
+                            print '<section class="search-listing-header">';
+                                print '<h3>'.$listingTitle.'</h3>';
+                                print '<button><a href="listing.php">View</a></button>';
+                            print '</section>';
+                        print '</div>';
+                        }
+                        print "</div>
+                    </section>
+                    ";
+                    }else{
+                        print '<h2> empty </h2>';
+                    }
                 }
             }
-
-
-        */ 
+        ?>
+         
         <form action="" method="GET" class="listings-filter">
             <!--
                 Apartments filter
