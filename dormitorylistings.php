@@ -4,6 +4,55 @@
 
 <main class="dormitorylistings">
     <div class="search-filters">
+        <?php
+            if($_SERVER["REQUEST_METHOD"] === "GET") {
+                $listCampuses = isset($_GET["listCampuses"]) ? $_GET["listCampuses"] : "";
+                $listComplexes = isset($_GET["listComplexes"]) ? $_GET["listComplexes"] : "";
+                $listRoomSizes = isset($_GET["listRoomSizes"]) ? $_GET["listRoomSizes"] : "";
+                $chkBathroom = isset($_GET["chkBathroom"]) ? $_GET["chkBathroom"] : "";
+
+                if(isset($_GET["error"])) {
+                    $errorMessage = $_GET["error"];
+                }
+
+                $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing";
+                $sql .= "JOIN tblDormitoryListing ON pmkListingId = fnkListingId ";
+                $sql .= "WHERE fldCampus = ?";
+                $sql .= "AND fldComplex = ?";
+                $sql .= "AND flxHasPrivateBathroom = ?";
+                $sql .= "AND fldBathrooms = ?";
+                $data = array($listCampuses, $listComplexes, $listRoomSizes, $chkBathroom);
+                $results = $thisDatabaseReader->select($sql, $data);
+
+                if(!empty($results)) {
+                    $listingId = $results[0]["pmkListingId"];
+                    $listingTitle = $results[0]["fldListingTitle"];
+                    print "
+                    <section class=\"search-listing-wrapper\">
+                    <h2>Dormitory Listings</h2>
+                    <div class=\"search-listings\">
+                        <div class=\"search-listing\">";
+                    foreach ($results as $listing){
+                        print <div class="search-listing">
+                        print <div class="search-listing-thumbnail">
+                            print <img src="images/listings/dormitory_listings/.$listingId/.$listingId._1.png">
+                        print </div>
+                        print <section class="search-listing-header">
+                            print <h3>$listingTitle</h3>
+                            print <button><a href="listing.php">View</a></button>
+                        print </section>
+                    print </div>
+                    }
+                    print "</div>
+                </section>
+                ";
+                }
+                else {
+                    # code...
+                }   
+            }
+        ?>
+
         <form action="" method="GET" class="listings-filter">
             <!--
                 Dorm room filter
@@ -43,9 +92,8 @@
 
             <div class="fldRoomSize">
                 <legend>Room Size</legend>
-                <select name="lstRoomSizes">
+                <select name="listRoomSizes">
                     <option value="Any">Any</option>
-                    <option value="Single">Single</option>
                     <option value="Double">Double</option>
                     <option value="Triple">Triple</option>
                     <option value="Quad">Quad</option>
@@ -57,6 +105,10 @@
                 <p>
                     <input type="checkbox" name="chkBathroom" id="chkBathroom" value="1">
                 </p>
+            </div>
+
+            <div class="filterSubmit">
+                <button type="submit">Submit</button>
             </div>
         </form>
     </div>
@@ -116,6 +168,11 @@
                 
                 dropdown.classList.toggle("show");
             }
+
+            function filter(){
+
+            }
+
             
         </script>
     </body>

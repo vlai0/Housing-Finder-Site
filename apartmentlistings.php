@@ -4,6 +4,37 @@
 
 <main class="apartmentlistings">
     <div class="search-filters">
+
+    
+        <?php
+        /*
+            if($_SERVER["REQUEST_METHOD"] === "GET") {
+                $numMin = isset($_GET["numMin"]) ? $_GET["numMin"] : "";
+                $numMax = isset($_GET["numMax"]) ? $_GET["numMax"] : "";
+                $listBedrooms = isset($_GET["listBedrooms"]) ? $_GET["listBedrooms"] : "";
+                $listBathrooms = isset($_GET["listBathrooms"]) ? $_GET["listBathrooms"] : "";
+                $listLocations = isset($_GET["listLocations"]) ? $_GET["listLocations"] : "";
+
+                if(isset($_GET["error"])) {
+                    $errorMessage = $_GET["error"];
+                }
+
+                $sql = "SELECT fldListingId FROM tblListing";
+                $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
+                $sql .= "WHERE fldRent >= ?";
+                $sql .= "AND fldRent <= ?";
+                if (
+                    $listBedrooms
+                )
+                $sql .= "AND fldBedrooms = ?";
+                $sql .= "AND fldBathrooms = ?";
+                $sql .= "AND fldTowns = ?";
+                $data = array($numMin, $numMax, $listBedrooms, $listBathrooms, $listLocations);
+                $results = $thisDatabaseReader->select($sql, $data);
+            }
+
+
+        */ ?>
         <form action="" method="GET" class="listings-filter">
             <!--
                 Apartments filter
@@ -78,13 +109,19 @@
                     <label for="chkParking">Parking</label>
                     <input type="checkbox" name="chkDishwasher" id="chkDishwasher" value="1">
                     <label for="chkDishwasher">Dishwasher</label>
+                    <input type="checkbox" name="chkInternet" id="chkInternet" value="1">
+                    <label for="chkInternet">Internet</label>
                 </p>
+            </div>
+
+            <div class="filterSubmit">
+                <button type="submit">Submit</button>
             </div>
         </form>
     </div>
     <!-- Listings -->
     <section class="search-listing-wrapper">
-        <h2>Dormitory Listings</h2>
+        <h2>Apartment Listings</h2>
         <div class="search-listings">
             <div class="search-listing" id="listing-1">
                 <div class="search-listing-thumbnail">

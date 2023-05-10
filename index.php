@@ -16,8 +16,8 @@
 
     <div class="landing-section-wrapper" id="landing-top">
         <section class="landing-section">
-            <h2>Sample Header</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris in aliquam sem fringilla ut morbi tincidunt augue interdum. Tortor posuere ac ut consequat semper viverra nam libero. Habitasse platea dictumst quisque sagittis purus sit amet volutpat. Pellentesque habitant morbi tristique senectus et netus et.</p>
+            <h2>Find a Home Hassle-Free</h2>
+            <p>We make browsing for apartments and getting connected with potential roommates easy by allowing you to search, connect, and share on your terms. Take a look around and find the right place for you.</p>
         </section>
 
         <section class="landing-section">
