@@ -272,8 +272,9 @@ main h2:not(.hero-banner h2) {
     display: grid;
     grid-gap: 10px;
     grid-template-areas: 
-    'profile profile listings-made listings-made listings-made'
-    'profile profile listings-followed listings-followed listings-followed';
+    'profile'
+    'listings-made'
+    'listings-followed';
     padding-top: 64px;
     padding-bottom: 64px;
 }
@@ -776,6 +777,12 @@ footer a:hover {
 
     .slide {
         height: 24rem;
+    }
+
+    .dashboard-section-wrapper{
+        grid-template-areas: 
+        'profile profile listings-made listings-made listings-made'
+        'profile profile listings-followed listings-followed listings-followed';
     }
 }
 

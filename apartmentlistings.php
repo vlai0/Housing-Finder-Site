@@ -7,34 +7,53 @@
 
     
         <?php
-        /*
             if($_SERVER["REQUEST_METHOD"] === "GET") {
                 $numMin = isset($_GET["numMin"]) ? $_GET["numMin"] : "";
                 $numMax = isset($_GET["numMax"]) ? $_GET["numMax"] : "";
                 $listBedrooms = isset($_GET["listBedrooms"]) ? $_GET["listBedrooms"] : "";
                 $listBathrooms = isset($_GET["listBathrooms"]) ? $_GET["listBathrooms"] : "";
                 $listLocations = isset($_GET["listLocations"]) ? $_GET["listLocations"] : "";
+                $chkAC = isset($_GET["chkAC"]) ? $_GET["chkAC"] : "";
+                $chkLaundry = isset($_GET["chkLaundry"]) ? $_GET["chkLaundry"] : "";
+                $chkParking = isset($_GET["chkParking"]) ? $_GET["chkParking"] : "";
+                $chkDishwasher = isset($_GET["chkDishwasher"]) ? $_GET["chkDishwasher"] : "";
+                $chkInternet = isset($_GET["chkInternet"]) ? $_GET["chkInternet"] : "";
 
                 if(isset($_GET["error"])) {
                     $errorMessage = $_GET["error"];
                 }
 
-                $sql = "SELECT fldListingId FROM tblListing";
-                $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
-                $sql .= "WHERE fldRent >= ?";
-                $sql .= "AND fldRent <= ?";
-                if (
-                    $listBedrooms
-                )
-                $sql .= "AND fldBedrooms = ?";
-                $sql .= "AND fldBathrooms = ?";
-                $sql .= "AND fldTowns = ?";
-                $data = array($numMin, $numMax, $listBedrooms, $listBathrooms, $listLocations);
-                $results = $thisDatabaseReader->select($sql, $data);
+                if($numMin != "" && $numMax != "" && $listBedrooms != "" && $listBathrooms != "" && $listLocations != "") {
+
+                    $sql = "SELECT fldListingId FROM tblListing";
+                    $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
+                    $sql .= "WHERE fldRent >= ?";
+                    $sql .= "AND fldRent <= ?";
+                    if ($listBedrooms != 1 && $listBedrooms != 2 && $listBedrooms != 3){
+                        $sql .= "AND fldBedrooms >= 4";
+                    }
+                    else{
+                        $sql .= "AND fldBedrooms = ?";
+                    }
+                    if ($listBathrooms != 1 && $listBathrooms != 2 && $listBathrooms != 3){
+                        $sql .= "AND fldBedrooms >= 4";
+                    }
+                    else{
+                        $sql .= "AND fldBathrooms = ?";
+                    }
+                    $sql .= "AND fldTowns = ?";
+                    $sql .= "AND fldHasAirConditioning = ?";
+                    $sql .= "AND fldHasLaundry = ?";
+                    $sql .= "AND fldHasParking = ?";
+                    $sql .= "AND fldHasDishwasher = ?";
+                    $sql .= "AND fldHasInternet = ?"
+                    $data = array($numMin, $numMax, $listBedrooms, $listBathrooms, $listLocations, $chkAC, $chkLaundry, $chkParking, $chkDishwasher, $chkInternet);
+                    $results = $thisDatabaseReader->select($sql, $data);
+                }
             }
 
 
-        */ ?>
+        */ 
         <form action="" method="GET" class="listings-filter">
             <!--
                 Apartments filter
