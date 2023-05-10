@@ -6,13 +6,18 @@
 <?php
     $errorMessage = "";
     if($_SERVER["REQUEST_METHOD"] === "POST") {
-        $username = getPostData("txtUsername");
         $password = getPostData("txtPassword");
         $passwordConfirmation = getPostData("txtPasswordConfirm");
         $token = getPostData("txtToken");
 
-        if($username != "" && $password != "" && $passwordConfirmation != "" && $token != "") {
+        $sql = "SELECT pfkUsername FROM tblPasswordReset ";
+        $sql .= "WHERE fldToken = ?";
+        $data = array($token);
+        $results = $thisDatabaseReader->select($sql, $data);
+           
+        if(!empty($results) && $username != "" && $password != "" && $passwordConfirmation != "" && $token != "") {
             $validInput = true;
+            $username = $results[0]["pfkUsername"];
 
             // Verify password is at least 6 characters in length.
             if(strlen($password) < 6) {
@@ -58,24 +63,23 @@
         }
 
         if($token != "") {
-            $sql = "SELECT pfkUsername, fldTimestamp FROM tblPasswordReset ";
+            $sql = "SELECT fldTimestamp FROM tblPasswordReset ";
             $sql .= "WHERE fldToken = ?";
             $data = array($token);
             $results = $thisDatabaseReader->select($sql, $data);
 
             if(!empty($results)) {
-                $username = $results[0]["pfkUsername"];
                 $timestamp = new DateTime($results[0]["fldTimestamp"]);
                 $currentTimestamp = new DateTime("now");
 
                 // Check token is not expired (must be used within 5 minutes).
                 if($timestamp->diff($currentTimestamp)->i < 5) {
                     print "
-                        <div class=\"login-wrapper\">
+                        <div class=\"center-wrapper\">
                             <section class=\"form-section\">
                                 
                                 <h2>Reset Password</h2>
-                                <form class=\"login-form\" action=\"\" method=\"POST\">
+                                <form class=\"primary-form\" action=\"\" method=\"POST\">
                                     <p class=\"form-element\">
                                         <label for=\"txtPassword\">New Password</label>
                                         <input type=\"password\" name=\"txtPassword\" placeholder=\"Enter Password\" required>
@@ -85,7 +89,6 @@
                                         <input type=\"password\" name=\"txtPasswordConfirm\" placeholder=\"Confirm Password\" required>
                                     </p>
                                     <p class=\"form-element\">
-                                        <input type=\"hidden\" name=\"txtUsername\" value=\"".$username."\">
                                         <input type=\"hidden\" name=\"txtToken\" value=\"".$token."\">
                                     </p>
                                     <p class=\"form-element\">
@@ -107,7 +110,9 @@
                 } else {
                     print "<h2>Your password reset token has expired or does not exist!</h2>";
                 }
-            }      
+            } else {
+                print "<h2>Your password reset token has expired or does not exist!</h2>";
+            }
         } else {
             print "<h2>Your password reset token has expired or does not exist!</h2>";
         }

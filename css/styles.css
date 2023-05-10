@@ -14,7 +14,7 @@ main {
     min-height: calc(100vh - 64px);
 }
 
-main:not(.landing):not(.login):not(.register):not(.forgotpassword) {
+main:not(.landing):not(.login):not(.register):not(.forgotpassword):not(.resetpassword) {
     padding: 1rem;
 }
 
@@ -312,6 +312,14 @@ main h2:not(.hero-banner h2) {
     border-left: none;
     border-right: none;
     border-top: none;
+}
+
+textarea { 
+    resize: vertical; 
+}
+
+.form-element input[type="checkbox"] {
+    vertical-align: middle;
 }
 
 .form-redirect {
@@ -668,7 +676,7 @@ footer a:hover {
 /* ########## Media Queries & Breakpoints ########## */
 @media (min-width: 992px) {
 
-    main:not(.landing):not(.login):not(.register):not(.forgotpassword) {
+    main:not(.landing):not(.login):not(.register):not(.forgotpassword):not(.resetpassword) {
         padding-top: 2rem;
         padding-left: 4rem;
         padding-right: 4rem;
@@ -751,7 +759,7 @@ footer a:hover {
 
 @media (min-width: 1400px) {
 
-    main:not(.landing):not(.login):not(.register):not(.forgotpassword) {
+    main:not(.landing):not(.login):not(.register):not(.forgotpassword):not(.resetpassword) {
         padding-left: 16rem;
         padding-right: 16rem;
         padding-top: 4rem;
