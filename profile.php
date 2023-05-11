@@ -40,7 +40,9 @@
 ?>
 
 <main class="dashboard">
-<h2>Dashboard</h2>
+<?php
+    print "<h3>".$information[0]["fldFirstName"]. "'s Profile</h3>";
+?>
     <div class="dashboard-section-wrapper">
         <section class="dashboard-section1">
             <h2>Profile</h2>

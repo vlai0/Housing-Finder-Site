@@ -251,18 +251,28 @@ main h2:not(.hero-banner h2) {
 }
 
 /* ########## Dashboard ########## */
-.dashboard-section h2 {
+.dashboard h3 {
     font-size: 1.6em;
     font-family: "Inter", sans-serif;
     color: #434341;
-    text-align: center;
     margin-bottom: 1rem;
 }
 
-.dashboard-section p {
-    font-family: "Lato", sans-serif;
-    color: #434341;
+.dashboard-section-wrapper li{
+    list-style-type: none;
 }
+
+.dashboard-section-wrapper p, a{
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    color: black;
+}
+
+.dashboard-section-wrapper a:hover{
+    text-decoration: underline;
+}
+
 
 .dashboard-section1 { grid-area: profile; }
 .dashboard-section2 { grid-area: listings-made; }
@@ -280,9 +290,10 @@ main h2:not(.hero-banner h2) {
 }
 
 .dashboard-section1, .dashboard-section2, .dashboard-section3 {
+    border-radius: 4px;
     padding: 1rem;
     background-color: lightgray;
-
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
 }
 
 
