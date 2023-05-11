@@ -61,7 +61,7 @@
             -->
 
             <div class="fldCampus">
-                <h4>Campus</h4>
+                <legend>Campus</legend>
                 <select name="listCampuses">
                     <option value="No Pref" <?php if($listCampuses == "" || $listCampuses == "No Pref") { print "selected"; }?>>No Preference</option>
                     <option value="Redstone" <?php if($listCampuses == "Redstone") { print "selected"; }?>>Redstone</option>
@@ -72,7 +72,7 @@
             </div>
 
             <div class="fldComplex">
-                <h4>Complex</h4>
+                <legend>Complex</legend>
                 <select name="listComplexes">
                     <option value="Any" <?php if($listComplexes == "" || $listComplexes == "Any") { print "selected"; }?>>Any</option>
                     <option value="CCRH" <?php if($listComplexes == "CCRH") { print "selected"; }?>>CCRH</option>
@@ -89,7 +89,7 @@
             </div>
 
             <div class="fldRoomSize">
-                <h4>Room Size</h4>
+                <legend>Room Size</legend>
                 <select name="listRoomSizes">
                     <option value="Any" <?php if($listRoomSizes == "" || $listRoomSizes == "Any") { print "selected"; }?>>Any</option>
                     <option value="Double" <?php if($listRoomSizes == "Double") { print "selected"; } ?>>Double</option>
@@ -99,7 +99,7 @@
             </div>
 
             <div class="fldBathroom">
-                <h4>Private Bathroom?</h4>
+                <legend>Private Bathroom?</legend>
                 <p>
                     <input type="checkbox" name="chkBathroom" id="chkBathroom" value="1" <?php if($chkBathroom == 1) { print "checked"; } ?>>
                 </p>
@@ -111,10 +111,17 @@
         </form>
     </div>
 
-
     <!-- Listings -->
     <section class="search-listing-wrapper">
         <h2>Dormitory Listings</h2>
+        <?php
+            if(session_id() != "" && isset($_SESSION) && isset($_SESSION["username"])) {
+                print "<p><a href=\"new_post.php\" class=\"new-listing-button\">&#43; Make a New Listing</a></p>";
+            } else {
+                print "<p><a href=\"login.php\" class=\"new-listing-button\">Log In to Make a Listing!</a></p>";
+            }
+        ?>
+        
         <div class="search-listings">
             <?php
                 $searchListingNumber = 1;

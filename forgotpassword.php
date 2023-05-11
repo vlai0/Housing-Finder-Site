@@ -9,8 +9,11 @@
                 /* Form */
                 $email = "";
                 $errorMessage = "";
+                $confirmation = "";
 
                 if($_SERVER["REQUEST_METHOD"] === "POST") {
+                    $confirmation = "A reset password email was sent and will appear in your email if the email address is in our system.";
+
                     // Getting email + sanitation
                     $email = getPostData("txtEmail");
 
@@ -43,13 +46,13 @@
                             $sql = "DELETE FROM tblPasswordReset ";
                             $sql .= "WHERE pfkUsername = ?";
                             $data = array($results[0]["pmkUsername"]);
-                            $suc = $thisDatabaseWriter->delete($sql, $data);
+                            $success = $thisDatabaseWriter->delete($sql, $data);
 
                             // Insert the password reset token into database.
                             $sql = "INSERT INTO tblPasswordReset (pfkUsername, fldToken) ";
                             $sql .= "VALUES(?, ?)";
                             $data = array($results[0]["pmkUsername"], $token);
-                            $suc = $thisDatabaseWriter->insert($sql, $data);
+                            $success = $thisDatabaseWriter->insert($sql, $data);
 
                             //create the email to be sent to reset password
                             $to = $email;
@@ -120,6 +123,11 @@
                 <p class="form-element">
                     <button type="submit">Submit</button>
                 </p>
+                <?php
+                    if($confirmation != "") {
+                        print "<p style=\"color: green; text-align: center; font-family: Arial, sans-serif;\">".$confirmation."</p>";
+                    }
+                ?>
             </form>
         </section>
     </div>

@@ -43,7 +43,7 @@
             <div class="fldNumBathroom">
                 <legend>Bathrooms</legend>
                 <select name="listBathrooms">
-                    <option value="No Pref">No preference</option>
+                    <option value="No Pref">No Preference</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

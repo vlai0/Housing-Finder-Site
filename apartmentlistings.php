@@ -93,7 +93,7 @@
                 Town/city
             -->
             <div class="fldMin">
-                <label for="numMin">Minimum Rent ($)</label>
+                <legend>Minimum Rent ($)</legend>
                 <p>
                     <input type="number" name="numMin" id="numMin" min="0" max="999999" step="0.01" value="<?php if($numMin >= "0" && $numMin < "1000000") { print $numMin; } else { print "0"; } ?>">
                 </p>
@@ -104,14 +104,14 @@
             </p>
 
             <div class="fldMax">
-                <label for="numMax">Maximum Rent ($)</label>
+                <legend>Maximum Rent ($)</legend>
                 <p>
                     <input type="number" name="numMax" id="numMax" min="0" max="999999" step="0.01" value="<?php if($numMax < "1000000" && $numMax >= "0") { print $numMax; } else { print "999999"; } ?>">
                 </p>
             </div>
 
             <div class="fldNumBedroom">
-                <h4>Bathrooms</h4>
+                <legend>Bedrooms</legend>
                 <select name="listBedrooms">
                     <option value="No Pref" <?php if($listBedrooms == "" || $listBedrooms == "No Pref") { print "selected"; }?>>No preference</option>
                     <option value="1" <?php if($listBedrooms == "1") { print "selected"; }?>>1</option>
@@ -122,7 +122,7 @@
             </div>
 
             <div class="fldNumBathroom">
-                <h4>Bathrooms</h4>
+                <legend>Bathrooms</legend>
                 <select name="listBathrooms">
                     <option value="No Pref" <?php if($listBathrooms == "" || $listBathrooms == "No Pref") { print "selected"; }?>>No preference</option>
                     <option value="1" <?php if($listBathrooms == "1") { print "selected"; }?>>1</option>
@@ -133,7 +133,7 @@
             </div>
 
             <div class="fldLocation">
-                <h4>Location</h4>
+                <legend>Location</legend>
                 <select name="listLocations">
                     <option value="Any" <?php if($listLocations == "" || $listLocations == "Any") { print "selected"; }?>>Any</option>
                     <option value="Burlington" <?php if($listLocations == "Burlington") { print "selected"; }?>>Burlington</option>
@@ -148,7 +148,7 @@
             </div>
 
             <div class="fldAmenities">
-                <h4>Amenities</h4>
+                <legend>Amenities</legend>
                 <p>
                     <input type="checkbox" name="chkAC" id="chkAC" value="1" <?php if($chkAC == 1) { print "checked"; } ?>>
                     <label for="chkAC">Air Conditioning</label>
@@ -169,10 +169,16 @@
         </form>
     </div>
 
-
     <!-- Listings -->
     <section class="search-listing-wrapper">
         <h2>Dormitory Listings</h2>
+        <?php
+            if(session_id() != "" && isset($_SESSION) && isset($_SESSION["username"])) {
+                print "<p><a href=\"new_post.php\" class=\"new-listing-button\">&#43; Make a New Listing</a></p>";
+            } else {
+                print "<p><a href=\"login.php\" class=\"new-listing-button\">Log In to Make a Listing!</a></p>";
+            }
+        ?>
         <div class="search-listings">
             <?php
                 $searchListingNumber = 1;

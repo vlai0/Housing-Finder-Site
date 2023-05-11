@@ -1,4 +1,5 @@
 <?php
+    define("ADMINS", array("astem", "vlai", "idavis1", "rerickso"));
     define('PATH_PARTS', pathinfo(htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES, "UTF-8")));
     session_start();
 ?>
@@ -13,6 +14,8 @@
             <meta name="author" content="Vincent Lai">
             <meta name="description" content="">
             <link rel="stylesheet" href="css/styles.css">
+            <link rel="stylesheet" type="text/css" media="(max-width: 800px)" href="css/tablet.css">
+            <link rel="stylesheet" type="text/css" media="(max-width: 600px)" href="css/phone.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </head>
 <?php

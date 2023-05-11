@@ -1,11 +1,15 @@
 <?php
     include "top.php";
+
+    if(session_id() != "" && isset($_SESSION) && isset($_SESSION["username"])) {
+        header("Location: profile.php");
+    } 
 ?>
 <main class="login">
     <div class="center-wrapper">
         <section class="form-section">
             <h2>Log In</h2>
-            <form class="primary-form" action="" method="POST">
+            <form class="primary-form" action="#" method="POST">
                 <p class="form-element">
                     <label for="txtUsername">Username</label>
                     <input type="text" name="txtUsername" placeholder="Enter Your Username" required>
@@ -19,12 +23,10 @@
                 </p>
             </form>
             <?php
-                session_start();
-                
                 if($_SERVER["REQUEST_METHOD"] === "POST") {
 
-                    $username = $_POST["txtUsername"];
-                    $password = $_POST["txtPassword"];
+                    $username = getPostData("txtUsername");
+                    $password = getPostData("txtPassword");
 
                     $query = "SELECT fldPasswordHash FROM tblUser ";
                     $query .= "WHERE pmkUsername = ?";

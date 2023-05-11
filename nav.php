@@ -12,33 +12,74 @@
         <?php include "header.php"; ?>
     </div>
     <ul class="navigation-links">
-        <li><a class="<?php 
-            if(PATH_PARTS['filename'] == "index") { 
-                print 'active-page';
+        <?php
+            $displayLoggedInLinks = false; 
+            if(session_id() != "" && isset($_SESSION) && isset($_SESSION["username"])) {
+                $displayLoggedInLinks = true; 
+                $isAdmin = false;
+                if(in_array($_SESSION["username"], ADMINS)) {
+                    $isAdmin = true;
+                }
+            } 
+
+            if($displayLoggedInLinks) {
+                print "<li><a class=\"";
+                    if(PATH_PARTS['filename'] == "profile") { 
+                        print 'active-page';
+                    }
+                print "\" href=\"profile.php\">My Profile</a></li>".PHP_EOL;
+
+                print "<li><a class=\"";
+                    if(PATH_PARTS['filename'] == "dormitorylistings") { 
+                        print 'active-page';
+                    }
+                print "\" href=\"dormitorylistings.php\">Dorm Roommate Requests</a></li>".PHP_EOL;
+
+                print "<li><a class=\"";
+                    if(PATH_PARTS['filename'] == "apartmentlistings") { 
+                        print 'active-page';
+                    }
+                print "\" href=\"apartmentlistings.php\">Find an Apartment</a></li>".PHP_EOL;
+
+                print "<li><a class=\"bullet ";
+                    if(PATH_PARTS['filename'] == "logout") { 
+                        print 'active-page';
+                    }
+                print "\" href=\"logout.php\">Log Out</a></li>".PHP_EOL;
+
+                if($isAdmin) {
+                    print "<li><a style=\"color: white; background-color: #D0342C;\" class=\"bullet ";
+                    if(PATH_PARTS['filename'] == "admin") { 
+                        print 'active-page';
+                    }
+                    print "\" href=\"admin.php\">Admin</a></li>".PHP_EOL;
+                }
+            } else {
+                print "<li><a class=\"";
+                    if(PATH_PARTS['filename'] == "index") { 
+                        print 'active-page';
+                    }
+                print "\" href=\"index.php\">Home</a></li>".PHP_EOL;
+
+                print "<li><a class=\"";
+                    if(PATH_PARTS['filename'] == "dormitorylistings") { 
+                        print 'active-page';
+                    }
+                print "\" href=\"dormitorylistings.php\">Dorm Roommate Requests</a></li>".PHP_EOL;
+
+                print "<li><a class=\"";
+                    if(PATH_PARTS['filename'] == "apartmentlistings") { 
+                        print 'active-page';
+                    }
+                print "\" href=\"apartmentlistings.php\">Find an Apartment</a></li>".PHP_EOL;
+
+                print "<li><a class=\"bullet ";
+                    if(PATH_PARTS['filename'] == "login") { 
+                        print 'active-page';
+                    }
+                print "\" href=\"login.php\">Log In</a></li>".PHP_EOL;
             }
-            ?>" 
-            href="index.php">Home</a>
-        </li>
-        <li><a class="<?php 
-            if(PATH_PARTS['filename'] == "dormitorylistings") { 
-                print 'active-page';
-            }
-            ?>" 
-            href="dormitorylistings.php">Dorm Roommate Requests</a>
-        </li>
-        <li><a class="<?php 
-            if(PATH_PARTS['filename'] == "apartmentlistings") { 
-                print 'active-page';
-            }
-            ?>"
-         href="apartmentlistings.php">Find an Apartment</a>
-        </li>
-        <li><a class="bullet <?php 
-            if(PATH_PARTS['filename'] == "login") { 
-                print 'active-page';
-            }
-            ?>" 
-            href="login.php">Log In</a>
-        </li>
+
+        ?>
     </ul>
 </nav>

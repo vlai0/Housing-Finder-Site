@@ -89,11 +89,11 @@
             <p><i class="fa fa-envelope"></i> <a href="mailto:<?php print $userEmail; ?>"><?php print $userEmail; ?></a></p>
             <?php
                 /* MANAGE LISTING FOLLOWING/UNFOLLOWING */
-                if($_SERVER["REQUEST_METHOD"] == "POST") {
+                if($_SERVER["REQUEST_METHOD"] === "POST") {
                     $listingToToggle = getPostData("hidToggleFollow");
                     // Check if user already follows.
                     $sql = "SELECT * FROM tblFollowedListings WHERE pfkUsername = ? AND pfkListingId = ?";
-                    $data = array($username, $listingID);
+                    $data = array($_SESSION["username"], $listingID);
                     $results = $thisDatabaseReader->select($sql, $data);
 
                     if(empty($results)) {
@@ -113,11 +113,11 @@
                 }
                 // Check if user is logged in.
                 if(session_id() != "" && isset($_SESSION) && isset($_SESSION["username"])) {
-                    print "<form action=\"\" method=\"POST\">".PHP_EOL;
+                    print "<form action=\"#\" method=\"POST\">".PHP_EOL;
 
                     // Check if user already follows.
                     $sql = "SELECT * FROM tblFollowedListings WHERE pfkUsername = ? AND pfkListingId = ?";
-                    $data = array($username, $listingID);
+                    $data = array($_SESSION["username"], $listingID);
                     $results = $thisDatabaseReader->select($sql, $data);
                     print "<p>".PHP_EOL;
                     print "<input type=\"hidden\" name=\"hidToggleFollow\" value=\"".$listingID."\">".PHP_EOL;

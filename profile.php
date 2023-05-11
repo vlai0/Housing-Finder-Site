@@ -1,12 +1,6 @@
 <?php
     include "top.php";
 
-    // Check if user is logged in.
-   /* if(session_id() == "" || !isset($_SESSION) || !isset($_SESSION["user"])) {
-        header("Location: login.php");
-        exit();
-    }
-*/
     // Get username.
     $user = "";
     if(!isset($_GET["user"])) {
@@ -16,7 +10,7 @@
     }
     
     // Get user information
-    $sql = "SELECT fldFirstName, fldDescription, fldProfileImagePath FROM tblUser WHERE pmkUsername = ?";
+    $sql = "SELECT pmkUsername, fldFirstName, fldDescription, fldProfileImagePath FROM tblUser WHERE pmkUsername = ?";
     $data = array($user);
     $information = $thisDatabaseReader->select($sql, $data);
 
@@ -47,9 +41,8 @@
         <section class="dashboard-section1">
             <h2>Profile</h2>
             <?php
-                print "<figure><img src=".$information[0]["fldProfileImagePath"]." alt=\"Vincent Lai\"> </figure>";
-                print "<p>".$information[0]["fldFirstName"]."</p>";
-                print "<p>".$information[0]["fldDescription"]."</p>";
+                print "<p><strong>Username:</strong> ".$information[0]["pmkUsername"]."</p>";
+                print "<p><strong>Description:</strong> ".$information[0]["fldDescription"]."</p>";
             ?>
         </section>
         <section class="dashboard-section2">
@@ -64,10 +57,9 @@
         <section class="dashboard-section3">
             <h2>Listings Followed</h2>
             <?php
-                foreach ($followedListing as $listing){
+                foreach ($followedListing as $listing) {
                     print '<li><a href="listing.php?listing_id='.$listing["pfkListingId"].'">'.$listing["fldListingTitle"].'</a></li>';
                 }
-
             ?>
         </section>
     </div>

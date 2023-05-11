@@ -27,8 +27,6 @@
                     $lastName = getPostData("txtLastName");
                     $birthDate = isset($_POST["dateBirthDate"]) ? $_POST["dateBirthDate"] : "";
                     $gender = getPostData("selectGender");
-                    $imageFile = "";
-                    $imageFileType = "";
                     if(is_uploaded_file($_FILES["imgProfilePicture"]["tmp_name"])) {
                         $imageFile = basename($_FILES["imgProfilePicture"]["name"]);
                         $imageFileType = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
@@ -36,6 +34,8 @@
                     $description = getPostData("txtDescription");
                     $username = getPostData("txtUsername");
                     $email = getPostData("txtEmail");
+                    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
                     // Do not sanitize passwords. They will be hashed.
                     $password = isset($_POST["txtPassword"]) ? $_POST["txtPassword"] : "";
                     $passwordConfirmation = isset($_POST["txtConfirmPassword"]) ? $_POST["txtConfirmPassword"] : "";
@@ -43,7 +43,6 @@
                     /* ##### VALIDATE DATA ##### */
                     $validInput = true;
 
-                    print_r($_POST);
                     /* VALIDATE firstName AND lastName */
                     if(strlen($firstName) == 0 || $firstName == "") {
                         $validInput = false;
@@ -81,27 +80,23 @@
                     $currentYear = $currentDate->format("Y");
                     $firstOfCurrentYearString = $currentYear."-01-01";
                     $firstOfCurrentYear = new DateTimeImmutable($firstOfCurrentYearString); 
-                    echo $firstOfCurrentYear->format("Y-m-d").PHP_EOL;
                     $oldestAllowedDate = $firstOfCurrentYear->modify('-130 year');
-                    echo $oldestAllowedDate->format("Y-m-d").PHP_EOL;
-                    echo $firstOfCurrentYear->diff($oldestAllowedDate)->s.PHP_EOL;
                     if($validInput && $birthDateObj > $currentDate || $birthDateObj < $oldestAllowedDate) {
-                        echo "WASSUP";
                         $validInput = false;
                         $errorMessage = "Birth date is not a valid date.";
                     }
 
                     /* VALIDATE GENDER IDENTITY */
-                    if($validInput && $gender != "Male" && $gender != "Female" && $gender != "Non-Binary" && $gender != "Gender Non-Conforming" && $gender != "Other") {
+                    $genderOptions = array("Male", "Female", "Non-Binary", "Gender Non-Conforming", "Other");
+                    if($validInput && !in_array($gender, $genderOptions)) {
                         $validInput = false;
                         $errorMessage = "Please select a listed gender identity.";
                     }
 
                     /* VALIDATE PROFILE IMAGE */
-                    // Check that profile image was actually uploaded.
+                    // Check if profile image was uploaded. If uploaded, validate.
                     if($imageFile != "" && $imageFileType != "") {
                         // Check if file type is jpeg/jpg or png.
-                        echo $imageFileType;
                         if($validInput && $imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
                             $validInput = false;
                             $errorMessage = "Profile image must be a jpg, jpeg, or png.";
@@ -115,14 +110,14 @@
                     }
 
                     /* VALIDATE DESCRIPTION */
-                    // Check description does not exceed 1,000 character.
+                    // Check description does not exceed 1,000 characters.
                     if($validInput && strlen($description) > 1000) {
                         $validInput = false;
                         $errorMessage = "Description cannot exceed 1,000 characters.";
                     }
 
                     /* VALIDATE USERNAME */
-                    // Check at least 3 characters.
+                    // Check contains at least 3 characters.
                     if($validInput && strlen($username) < 3) {
                         $validInput = false;
                         $errorMessage = "Username too short. Must be at least 3 characters in length.";
@@ -134,7 +129,7 @@
                         $errorMessage = "Username too long. Please make it at most 32 characters in length.";
                     }
 
-                    // Check if already in use.
+                    // Check if username is already in use.
                     if($validInput) {
                         $sql = "SELECT pmkUsername FROM tblUser ";
                         $sql .= "WHERE pmkUsername = ?";
@@ -149,7 +144,7 @@
                     
                     /* VALIDATE EMAIL */
                     // Check if email is valid format.
-                    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    if($validInput && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         $validInput = false;
                         $errorMessage = "Email is not valid.";
                     }
@@ -184,7 +179,7 @@
                     $DEBUG = false;
                     if($validInput && $DEBUG == false) {
                         // Add profile photo to profile images path and rename to standardized name.
-                        $standardizedImagePath = NULL;
+                        $standardizedImagePath = "images/profiles/profile_placeholder.png";
                         if($imageFile != "" && $imageFileType != "") {
                             $profileImagePath = "images/profiles/".$imageFile;
                             $standardizedImagePath = "images/profiles/profile_".$username.".png";
@@ -252,6 +247,8 @@
                             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
                             
                             mail($to, $subject, $message, $headers);
+
+                            header("Location: login.php");
                         } else {
                             print "<p class=\"form-error\">Unable to complete registration request at this time.</p>";
                         }
