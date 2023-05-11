@@ -4,8 +4,6 @@
 
 <main class="apartmentlistings">
     <div class="search-filters">
-
-    
         <?php
             if($_SERVER["REQUEST_METHOD"] === "GET") {
                 $numMin = isset($_GET["numMin"]) ? $_GET["numMin"] : "";
@@ -24,32 +22,34 @@
                 }
 
                 if($numMin != "" && $numMax != "" && $listBedrooms != "" && $listBathrooms != "" && $listLocations != "") {
-
-                    $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing";
+                    $data = array($numMin, $numMax, $chkAC, $chkLaundry, $chkParking, $chkDishwasher, $chkInternet);
+                    $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
                     $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
-                    $sql .= "WHERE fldRent >= ?";
-                    $sql .= "AND fldRent <= ?";
+                    $sql .= "WHERE fldRent >= ? ";
+                    $sql .= "AND fldRent <= ? ";
                     if ($listBedrooms != 1 && $listBedrooms != 2 && $listBedrooms != 3){
-                        $sql .= "AND fldBedrooms >= 4";
+                        $sql .= "AND fldBedrooms >= 4 ";
                     }
                     else if ($listBedrooms != "No Pref") {
-                        $sql .= "AND fldBedrooms = ?";
+                        $sql .= "AND fldBedrooms = ? ";
+                        array_push($data, $listBedrooms);
                     }
                     if ($listBathrooms != 1 && $listBathrooms != 2 && $listBathrooms != 3){
-                        $sql .= "AND fldBathrooms >= 4";
+                        $sql .= "AND fldBathrooms >= 4 ";
                     }
                     else if ($listBathrooms != "No Pref"){
-                        $sql .= "AND fldBathrooms = ?";
+                        $sql .= "AND fldBathrooms = ? ";
+                        array_push($data, $listBathrooms);
                     }
                     if ($listLocations != "Any"){
-                        $sql .= "AND fldTowns = ?";
+                        $sql .= "AND fldTown = ? ";
+                        array_push($data, $listLocations);
                     }
-                    $sql .= "AND fldHasAirConditioning = ?";
-                    $sql .= "AND fldHasLaundry = ?";
-                    $sql .= "AND fldHasParking = ?";
-                    $sql .= "AND fldHasDishwasher = ?";
+                    $sql .= "AND fldHasAirConditioning = ? ";
+                    $sql .= "AND fldHasLaundry = ? ";
+                    $sql .= "AND fldHasParking = ? ";
+                    $sql .= "AND fldHasDishwasher = ? ";
                     $sql .= "AND fldHasInternet = ?";
-                    $data = array($numMin, $numMax, $listBedrooms, $listBathrooms, $listLocations, $chkAC, $chkLaundry, $chkParking, $chkDishwasher, $chkInternet);
                     $results = $thisDatabaseReader->select($sql, $data);
 
                     if(!empty($results)) {
@@ -57,7 +57,7 @@
                         $listingTitle = $results[0]["fldListingTitle"];
                         print "
                         <section class=\"search-listing-wrapper\">
-                        <h2>Dormitory Listings</h2>
+                        <h2>Apartment Listings</h2>
                         <div class=\"search-listings\">
                             <div class=\"search-listing\">";
                         foreach ($results as $listing){

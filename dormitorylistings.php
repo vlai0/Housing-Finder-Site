@@ -16,31 +16,36 @@
                 }
 
                 if($listCampuses != "" && $listComplexes != "" && $listRoomSizes != "") {
-
+                    $data = array($chkBathroom);
                     $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
                     $sql .= "JOIN tblDormitoryListing ON pmkListingId = fnkListingId ";
+                    $sql .= "WHERE pmkListingId > 0 ";
                     if ($listCampuses != "No Pref"){
-                        $sql .= "WHERE fldCampus = ? ";
+                        $sql .= "AND fldCampus = ? ";
+                        array_push($data, $listCampuses);
                     }
                     if ($listComplexes != "Any"){
                         $sql .= "AND fldComplex = ? ";
+                        array_push($data, $listComplexes);
                     }
                     if ($listRoomSizes != "Any"){
                         $sql .= "AND fldRoomType = ? ";
+                        array_push($data, $listRoomSizes);
                     }
                     $sql .= "AND fldHasPrivateBathroom = ? ";
-                    $data = array($listCampuses, $listComplexes, $listRoomSizes, $chkBathroom);
                     $results = $thisDatabaseReader->select($sql, $data);
 
+                    echo $sql;
                     if(!empty($results)) {
-                        $listingId = $results[0]["pmkListingId"];
-                        $listingTitle = $results[0]["fldListingTitle"];
+
                         print "
                         <section class=\"search-listing-wrapper\">
                         <h2>Dormitory Listings</h2>
                         <div class=\"search-listings\">
                             <div class=\"search-listing\">";
                         foreach ($results as $listing){
+                            $listingId = $listing["pmkListingId"];
+                            $listingTitle = $listing["fldListingTitle"];
                             print '<div class="search-listing">';
                             print '<div class="search-listing-thumbnail">';
                             print '<img src="images/listings/dormitory_listings/'.$listingId.'/'.$listingId.'_1.png">';
@@ -121,7 +126,7 @@
         </form>
     </div>
     <!-- Listings -->
-    <!--
+
     <section class="search-listing-wrapper">
         <h2>Dormitory Listings</h2>
         <div class="search-listings">
@@ -146,40 +151,7 @@
             </div>
         </div>
     </section>
-        -->
-
-    <?php
-
-        $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
-        $sql .= "JOIN tblDormitoryListing ON pmkListingId = fnkListingId ";
-        $sql .= "WHERE fldCampus = ? ";
-        $sql .= "AND fldComplex = ? ";
-        $sql .= "AND fldRoomType= ? ";
-        $sql .= "AND fldHasPrivateBathroom = ? ";
-        $data = array($listCampuses, $listComplexes, $listRoomSizes, $chkBathroom);
-        $results = $thisDatabaseReader->select($sql, $data);
-    print "
-
         
-        <section class=\"search-listing-wrapper\">
-        <h2>Dormitory Listings</h2>
-        <div class=\"search-listings\">
-            <div class=\"search-listing\">";
-        foreach ($results as $listing){
-            print '<div class="search-listing">';
-            print '<div class="search-listing-thumbnail">';
-                print '<img src="images/listings/dormitory_listings/.$listingId/.$listingId._1.png">';
-            print '</div>';
-            print '<section class="search-listing-header">';
-                print '<h3>$listingTitle</h3>';
-                print '<button><a href="listing.php">View</a></button>';
-            print '</section>';
-        print '</div>';
-        }
-        print "</div>
-    </section>
-        ";
-        ?>
 </main>
 
 <?php
