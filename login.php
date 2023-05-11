@@ -38,7 +38,7 @@
                         if(password_verify($password, $results[0]["fldPasswordHash"])) {
                             // Success: Redirect user to dashboard.php and store username in session variable.
                             $_SESSION["username"] = $username;
-                            header("Location: dashboard.php");
+                            header("Location: profile.php");
                             exit();
                         } else {
                             print "<p class=\"form-error\">Incorrect username or password.</p>";
