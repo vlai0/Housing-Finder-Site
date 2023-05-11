@@ -4,14 +4,14 @@
 
 <main class="dormitorylistings">
     <?php
+        $results = "";
+        $data = array();
         if($_SERVER["REQUEST_METHOD"] === "GET") {
             $listCampuses = isset($_GET["listCampuses"]) ? $_GET["listCampuses"] : "";
             $listComplexes = isset($_GET["listComplexes"]) ? $_GET["listComplexes"] : "";
             $listRoomSizes = isset($_GET["listRoomSizes"]) ? $_GET["listRoomSizes"] : "";
             $chkBathroom = isset($_GET["chkBathroom"]) ? $_GET["chkBathroom"] : 0;
             if($listCampuses != "" && $listComplexes != "" && $listRoomSizes != "") {
-                $data = array();
-                print_r($data);
                 $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
                 $sql .= "JOIN tblDormitoryListing ON pmkListingId = fnkListingId ";
                 $sql .= "WHERE pmkListingId > 0 ";
@@ -34,7 +34,19 @@
                 $sql .= " ORDER BY fldCreationTimeStamp DESC";
 
                 $results = $thisDatabaseReader->select($sql, $data);
+            } else {
+                $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
+                $sql .= "JOIN tblDormitoryListing ON pmkListingId = fnkListingId ";
+                $sql .= "ORDER BY fldCreationTimeStamp DESC ";
+                $sql .= "LIMIT 50";
+                $results = $thisDatabaseReader->select($sql);
             }
+        } else {
+            $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
+            $sql .= "JOIN tblDormitoryListing ON pmkListingId = fnkListingId ";
+            $sql .= "ORDER BY fldCreationTimeStamp DESC ";
+            $sql .= "LIMIT 50";
+            $results = $thisDatabaseReader->select($sql);
         }
     ?>
 
@@ -121,7 +133,7 @@
                         print '</div>'.PHP_EOL;
                     }
                 } else {
-                    print '<h2> empty </h2>';
+                    print '<p>No listings found.</p>';
                 }
             ?>
         </div>
