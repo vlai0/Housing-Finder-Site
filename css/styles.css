@@ -570,6 +570,10 @@ main h2:not(.hero-banner h2) {
     font-size: 1.15em;
 }
 
+.search-filters h4{
+    font-weight: normal;
+}
+
 .fldCampus, .fldComplex, .fldRoomSize, .fldBathroom, .fldMin, .fldMax, .separator, .fldNumBedroom, .fldNumBathroom, .fldLocation, .fldAmenities, .filterSubmit{
     display: inline-block;
     font-family: "Inter", sans-serif;

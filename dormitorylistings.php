@@ -61,7 +61,7 @@
             -->
 
             <div class="fldCampus">
-                <legend>Campus</legend>
+                <h4>Campus</h4>
                 <select name="listCampuses">
                     <option value="No Pref" <?php if($listCampuses == "" || $listCampuses == "No Pref") { print "selected"; }?>>No Preference</option>
                     <option value="Redstone" <?php if($listCampuses == "Redstone") { print "selected"; }?>>Redstone</option>
@@ -72,7 +72,7 @@
             </div>
 
             <div class="fldComplex">
-                <legend>Complex</legend>
+                <h4>Complex</h4>
                 <select name="listComplexes">
                     <option value="Any" <?php if($listComplexes == "" || $listComplexes == "Any") { print "selected"; }?>>Any</option>
                     <option value="CCRH" <?php if($listComplexes == "CCRH") { print "selected"; }?>>CCRH</option>
@@ -89,7 +89,7 @@
             </div>
 
             <div class="fldRoomSize">
-                <legend>Room Size</legend>
+                <h4>Room Size</h4>
                 <select name="listRoomSizes">
                     <option value="Any" <?php if($listRoomSizes == "" || $listRoomSizes == "Any") { print "selected"; }?>>Any</option>
                     <option value="Double" <?php if($listRoomSizes == "Double") { print "selected"; } ?>>Double</option>
@@ -99,7 +99,7 @@
             </div>
 
             <div class="fldBathroom">
-                <legend>Private Bathroom?</legend>
+                <h4>Private Bathroom?</h4>
                 <p>
                     <input type="checkbox" name="chkBathroom" id="chkBathroom" value="1" <?php if($chkBathroom == 1) { print "checked"; } ?>>
                 </p>
