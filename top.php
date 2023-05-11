@@ -1,4 +1,4 @@
-<?php
+?php
     define("ADMINS", array("astem", "vlai", "idavis1", "rerickso"));
     define('PATH_PARTS', pathinfo(htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES, "UTF-8")));
     session_start();

@@ -179,7 +179,7 @@
                     $DEBUG = false;
                     if($validInput && $DEBUG == false) {
                         // Add profile photo to profile images path and rename to standardized name.
-                        $standardizedImagePath = "images/profiles/profile_placeholder.png";
+                        $standardizedImagePath = "images/profiles/placeholder.png";
                         if($imageFile != "" && $imageFileType != "") {
                             $profileImagePath = "images/profiles/".$imageFile;
                             $standardizedImagePath = "images/profiles/profile_".$username.".png";
