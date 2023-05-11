@@ -260,6 +260,54 @@ main h2:not(.hero-banner h2) {
     padding: 0.5rem;
 }
 
+
+/* ########## Dashboard ########## */
+.dashboard h3 {
+    font-size: 1.6em;
+    font-family: "Inter", sans-serif;
+    color: #434341;
+    margin-bottom: 1rem;
+}
+
+.dashboard-section-wrapper li{
+    list-style-type: none;
+}
+
+.dashboard-section-wrapper p, a{
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    color: black;
+}
+
+.dashboard-section-wrapper a:hover{
+    text-decoration: underline;
+}
+
+
+.dashboard-section1 { grid-area: profile; }
+.dashboard-section2 { grid-area: listings-made; }
+.dashboard-section3 { grid-area: listings-followed; }
+
+.dashboard-section-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas: 
+    'profile'
+    'listings-made'
+    'listings-followed';
+    padding-top: 64px;
+    padding-bottom: 64px;
+}
+
+.dashboard-section1, .dashboard-section2, .dashboard-section3 {
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: lightgray;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+}
+
+
 /* ########## Forms ########## */
 .primary-form {
 
@@ -539,6 +587,10 @@ textarea {
     font-size: 1.15em;
 }
 
+.search-filters h4{
+    font-weight: normal;
+}
+
 .fldCampus, .fldComplex, .fldRoomSize, .fldBathroom, .fldMin, .fldMax, .separator, .fldNumBedroom, .fldNumBathroom, .fldLocation, .fldAmenities{
     display: inline-block;
     font-family: "Inter", sans-serif;
@@ -753,6 +805,12 @@ footer a:hover {
 
     .slide {
         height: 24rem;
+    }
+    
+    .dashboard-section-wrapper{
+        grid-template-areas: 
+        'profile profile listings-made listings-made listings-made'
+        'profile profile listings-followed listings-followed listings-followed';
     }
 }
 
