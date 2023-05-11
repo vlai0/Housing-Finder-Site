@@ -3,84 +3,89 @@
 ?>
 
 <main class="apartmentlistings">
-    <div class="search-filters">
-        <?php
-            if($_SERVER["REQUEST_METHOD"] === "GET") {
-                $numMin = isset($_GET["numMin"]) ? $_GET["numMin"] : "";
-                $numMax = isset($_GET["numMax"]) ? $_GET["numMax"] : "";
-                $listBedrooms = isset($_GET["listBedrooms"]) ? $_GET["listBedrooms"] : "";
-                $listBathrooms = isset($_GET["listBathrooms"]) ? $_GET["listBathrooms"] : "";
-                $listLocations = isset($_GET["listLocations"]) ? $_GET["listLocations"] : "";
-                $chkAC = isset($_GET["chkAC"]) ? $_GET["chkAC"] : "";
-                $chkLaundry = isset($_GET["chkLaundry"]) ? $_GET["chkLaundry"] : "";
-                $chkParking = isset($_GET["chkParking"]) ? $_GET["chkParking"] : "";
-                $chkDishwasher = isset($_GET["chkDishwasher"]) ? $_GET["chkDishwasher"] : "";
-                $chkInternet = isset($_GET["chkInternet"]) ? $_GET["chkInternet"] : "";
+    <?php
+        $results = "";
+        $data = array();
+        if($_SERVER["REQUEST_METHOD"] === "GET") {
+            $numMin = isset($_GET["numMin"]) ? $_GET["numMin"] : "";
+            $numMax = isset($_GET["numMax"]) ? $_GET["numMax"] : "";
+            $listBedrooms = isset($_GET["listBedrooms"]) ? $_GET["listBedrooms"] : "";
+            $listBathrooms = isset($_GET["listBathrooms"]) ? $_GET["listBathrooms"] : "";
+            $listLocations = isset($_GET["listLocations"]) ? $_GET["listLocations"] : "";
+            $chkAC = isset($_GET["chkAC"]) ? $_GET["chkAC"] : 0;
+            $chkLaundry = isset($_GET["chkLaundry"]) ? $_GET["chkLaundry"] : 0;
+            $chkParking = isset($_GET["chkParking"]) ? $_GET["chkParking"] : 0;
+            $chkDishwasher = isset($_GET["chkDishwasher"]) ? $_GET["chkDishwasher"] : 0;
+            $chkInternet = isset($_GET["chkInternet"]) ? $_GET["chkInternet"] : 0;
 
-                if(isset($_GET["error"])) {
-                    $errorMessage = $_GET["error"];
-                }
-
-                if($numMin != "" && $numMax != "" && $listBedrooms != "" && $listBathrooms != "" && $listLocations != "") {
-                    $data = array($numMin, $numMax, $chkAC, $chkLaundry, $chkParking, $chkDishwasher, $chkInternet);
-                    $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
-                    $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
-                    $sql .= "WHERE fldRent >= ? ";
-                    $sql .= "AND fldRent <= ? ";
-                    if ($listBedrooms != 1 && $listBedrooms != 2 && $listBedrooms != 3){
-                        $sql .= "AND fldBedrooms >= 4 ";
-                    }
-                    else if ($listBedrooms != "No Pref") {
-                        $sql .= "AND fldBedrooms = ? ";
-                        array_push($data, $listBedrooms);
-                    }
-                    if ($listBathrooms != 1 && $listBathrooms != 2 && $listBathrooms != 3){
-                        $sql .= "AND fldBathrooms >= 4 ";
-                    }
-                    else if ($listBathrooms != "No Pref"){
-                        $sql .= "AND fldBathrooms = ? ";
-                        array_push($data, $listBathrooms);
-                    }
-                    if ($listLocations != "Any"){
-                        $sql .= "AND fldTown = ? ";
-                        array_push($data, $listLocations);
-                    }
+            if($numMin != "" && $numMax != "" && $listBedrooms != "" && $listBathrooms != "" && $listLocations != "") {
+                $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
+                $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
+                $sql .= "WHERE fldRent >= ? ";
+                array_push($data, $numMin);
+                $sql .= "AND fldRent <= ? ";
+                array_push($data, $numMax);
+                if($chkAC == 1) {
                     $sql .= "AND fldHasAirConditioning = ? ";
-                    $sql .= "AND fldHasLaundry = ? ";
-                    $sql .= "AND fldHasParking = ? ";
-                    $sql .= "AND fldHasDishwasher = ? ";
-                    $sql .= "AND fldHasInternet = ?";
-                    $results = $thisDatabaseReader->select($sql, $data);
-
-                    if(!empty($results)) {
-                        $listingId = $results[0]["pmkListingId"];
-                        $listingTitle = $results[0]["fldListingTitle"];
-                        print "
-                        <section class=\"search-listing-wrapper\">
-                        <h2>Apartment Listings</h2>
-                        <div class=\"search-listings\">
-                            <div class=\"search-listing\">";
-                        foreach ($results as $listing){
-                            print '<div class="search-listing">';
-                            print '<div class="search-listing-thumbnail">';
-                                print '<img src="images/listings/apartment_listings/'.$listingId.'/'.$listingId.'_1.png">';
-                            print '</div>';
-                            print '<section class="search-listing-header">';
-                                print '<h3>'.$listingTitle.'</h3>';
-                                print '<button><a href="listing.php">View</a></button>';
-                            print '</section>';
-                        print '</div>';
-                        }
-                        print "</div>
-                    </section>
-                    ";
-                    }else{
-                        print '<h2> empty </h2>';
-                    }
+                    array_push($data, $chkAC);
                 }
+                if($chkLaundry == 1) {
+                    $sql .= "AND fldHasLaundry = ? ";
+                    array_push($data, $chkLaundry);
+                }
+                if($chkParking == 1) {
+                    $sql .= "AND fldHasParking = ? ";
+                    array_push($data, $chkParking);
+                }
+                if($chkDishwasher == 1) {
+                    $sql .= "AND fldHasDishwasher = ? ";
+                    array_push($data, $chkDishwasher);
+                }
+                if($chkInternet == 1) {
+                    $sql .= "AND fldHasInternet = ? ";
+                    array_push($data, $chkInternet);
+                }
+                if ($listBedrooms != "1" && $listBedrooms != "2" && $listBedrooms != "3" && $listBedrooms != "No Pref"){
+                    $sql .= "AND fldBedrooms >= 4 ";
+                    array_push($data, $listBedrooms);
+                }
+                else if ($listBedrooms != "No Pref") {
+                    $sql .= "AND fldBedrooms = ? ";
+                    array_push($data, $listBedrooms);
+                }
+                if ($listBathrooms != "1" && $listBathrooms != "2" && $listBathrooms != "3" && $listBathrooms != "No Pref"){
+                    $sql .= "AND fldBedrooms >= 4 ";
+                    array_push($data, $listBathrooms);
+                }
+                else if ($listBathrooms != "No Pref"){
+                    $sql .= "AND fldBathrooms = ? ";
+                    array_push($data, $listBathrooms);
+                }
+                if ($listLocations != "Any"){
+                    $sql .= "AND fldTown = ? ";
+                    array_push($data, $listLocations);
+                }
+
+                $sql .= " ORDER BY fldCreationTimeStamp DESC";
+
+                $results = $thisDatabaseReader->select($sql, $data);
+            } else {
+                $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
+                $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
+                $sql .= "ORDER BY fldCreationTimeStamp DESC ";
+                $sql .= "LIMIT 50";
+                $results = $thisDatabaseReader->select($sql);
             }
+        } else {
+            $sql = "SELECT pmkListingId, fldListingTitle FROM tblListing ";
+            $sql .= "JOIN tblApartmentListing ON pmkListingId = fnkListingId ";
+            $sql .= "ORDER BY fldCreationTimeStamp DESC ";
+            $sql .= "LIMIT 50";
+            $results = $thisDatabaseReader->select($sql);
+        }
         ?>
-         
+    
+    <div class="search-filters">
         <form action="" method="GET" class="listings-filter">
             <!--
                 Apartments filter
@@ -92,7 +97,7 @@
             <div class="fldMin">
                 <legend>Minimum Price ($)</legend>
                 <p>
-                    <input type="number" name="numMin" id="numMin" value="0">
+                    <input type="number" name="numMin" id="numMin" value="0" <?php if($numMin != "0") { print $numMin; } ?>>
                 </p>
             </div>
 
@@ -103,59 +108,59 @@
             <div class="fldMax">
                 <legend>Maximum Price ($)</legend>
                 <p>
-                    <input type="number" name="numMax" id="numMax" value="10000">
+                    <input type="number" name="numMax" id="numMax" value="10000" <?php if($numMax != "10000") { print $numMax; } ?>>
                 </p>
             </div>
 
             <div class="fldNumBedroom">
                 <legend>Bedrooms</legend>
                 <select name="listBedrooms">
-                    <option value="No Pref">No preference</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4+">4+</option>
+                    <option value="No Pref" <?php if($listBedrooms == "" || $listBedrooms == "No Pref") { print "selected"; }?>>No preference</option>
+                    <option value="1" <?php if($listBedrooms == "1") { print "selected"; }?>>1</option>
+                    <option value="2" <?php if($listBedrooms == "2") { print "selected"; }?>>2</option>
+                    <option value="3" <?php if($listBedrooms == "3") { print "selected"; }?>>3</option>
+                    <option value="4+" <?php if($listBedrooms == "4+") { print "selected"; }?>>4+</option>
                 </select>
             </div>
 
             <div class="fldNumBathroom">
                 <legend>Bathrooms</legend>
                 <select name="listBathrooms">
-                    <option value="No Pref">No preference</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4+">4+</option>
+                    <option value="No Pref" <?php if($listBathrooms == "" || $listBathrooms == "No Pref") { print "selected"; }?>>No preference</option>
+                    <option value="1" <?php if($listBathrooms == "1") { print "selected"; }?>>1</option>
+                    <option value="2" <?php if($listBathrooms == "2") { print "selected"; }?>>2</option>
+                    <option value="3" <?php if($listBathrooms == "3") { print "selected"; }?>>3</option>
+                    <option value="4+" <?php if($listBathrooms == "4+") { print "selected"; }?>>4+</option>
                 </select>
             </div>
 
             <div class="fldLocation">
                 <legend>Location</legend>
                 <select name="listLocations">
-                    <option value="Any">Any</option>
-                    <option value="Burlington">Burlington</option>
-                    <option value="South Burlington">South Burlington</option>
-                    <option value="Winooski">Winooski</option>
-                    <option value="Colchester">Colchester</option>
-                    <option value="Shelburne">Shelburne</option>
-                    <option value="Essex">Essex</option>
-                    <option value="Williston">Williston</option>
-                    <option value="Other">Other</option>
+                    <option value="Any" <?php if($listLocations == "" || $listLocations == "Any") { print "selected"; }?>>Any</option>
+                    <option value="Burlington" <?php if($listLocations == "Burlington") { print "selected"; }?>>Burlington</option>
+                    <option value="South Burlington" <?php if($listLocations == "South Burlington") { print "selected"; }?>>South Burlington</option>
+                    <option value="Winooski" <?php if($listLocations == "Winooski") { print "selected"; }?>>Winooski</option>
+                    <option value="Colchester" <?php if($listLocations == "Colchester") { print "selected"; }?>>Colchester</option>
+                    <option value="Shelburne" <?php if($listLocations == "Shelburne") { print "selected"; }?>>Shelburne</option>
+                    <option value="Essex" <?php if($listLocations == "Essex") { print "selected"; }?>>Essex</option>
+                    <option value="Williston" <?php if($listLocations == "Williston") { print "selected"; }?>>Williston</option>
+                    <option value="Other" <?php if($listLocations == "Other") { print "selected"; }?>>Other</option>
                 </select>
             </div>
 
             <div class="fldAmenities">
                 <legend>Amenities</legend>
                 <p>
-                    <input type="checkbox" name="chkAC" id="chkAC" value="1">
+                    <input type="checkbox" name="chkAC" id="chkAC" value="1" <?php if($chkAC == 1) { print "checked"; } ?>>
                     <label for="chkAC">Air Conditioning</label>
-                    <input type="checkbox" name="chkLaundry" id="chkLaundry" value="1">
+                    <input type="checkbox" name="chkLaundry" id="chkLaundry" value="1" <?php if($chkLaundry == 1) { print "checked"; } ?>>
                     <label for="chkLaundry">In-unit Laundry</label>
-                    <input type="checkbox" name="chkParking" id="chkParking" value="1">
+                    <input type="checkbox" name="chkParking" id="chkParking" value="1" <?php if($chkParking == 1) { print "checked"; } ?>>
                     <label for="chkParking">Parking</label>
-                    <input type="checkbox" name="chkDishwasher" id="chkDishwasher" value="1">
+                    <input type="checkbox" name="chkDishwasher" id="chkDishwasher" value="1" <?php if($chkDishwasher == 1) { print "checked"; } ?>>
                     <label for="chkDishwasher">Dishwasher</label>
-                    <input type="checkbox" name="chkInternet" id="chkInternet" value="1">
+                    <input type="checkbox" name="chkInternet" id="chkInternet" value="1" <?php if($chkInternet == 1) { print "checked"; } ?>>
                     <label for="chkInternet">Internet</label>
                 </p>
             </div>
@@ -165,29 +170,32 @@
             </div>
         </form>
     </div>
+
+
     <!-- Listings -->
     <section class="search-listing-wrapper">
-        <h2>Apartment Listings</h2>
+        <h2>Dormitory Listings</h2>
         <div class="search-listings">
-            <div class="search-listing" id="listing-1">
-                <div class="search-listing-thumbnail">
-                    <img src="images/landing-background.jpg">
-                </div>
-                <section class="search-listing-header">
-                    <h3>Listing Exasdadasdadadadadadadadadadadadadadadadadadadadadadadadadaadadasdadample</h3>
-                    <button><a href="#">View</a></button>
-                </section>
-            </div>
-
-            <div class="search-listing" id="listing-2">
-                <div class="search-listing-thumbnail">
-                    <img src="images/landing-background.jpg">
-                </div>
-                <section class="search-listing-header">
-                    <h3>Listing Example</h3>
-                    <button>View</button>
-                </section>
-            </div>         
+            <?php
+                $searchListingNumber = 1;
+                if(!empty($results)) {
+                    foreach ($results as $listing) {
+                        $listingId = $listing["pmkListingId"];
+                        $listingTitle = $listing["fldListingTitle"];
+                        print "<div class=\"search-listing\" id=\"listing-".$searchListingNumber."\">".PHP_EOL;
+                            print '<div class="search-listing-thumbnail">'.PHP_EOL;
+                                print '<img src="images/listings/apartment_listings/'.$listingId.'/'.$listingId.'_1.png">'.PHP_EOL;
+                            print '</div>'.PHP_EOL;
+                            print '<section class="search-listing-header">'.PHP_EOL;
+                                print '<h3>'.$listingTitle.'</h3>'.PHP_EOL;
+                                print '<button><a href="listing.php?listing_id='.$listingId.'">View</a></button>'.PHP_EOL;
+                            print '</section>'.PHP_EOL;
+                        print '</div>'.PHP_EOL;
+                    }
+                } else {
+                    print '<p>No listings found.</p>';
+                }
+            ?>
         </div>
     </section>
 </main>
