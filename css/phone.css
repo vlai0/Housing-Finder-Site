@@ -1,0 +1,859 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Noto+Sans:wght@300;400;700&family=Raleway:wght@300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+main {
+    min-height: calc(100vh - 64px);
+}
+
+main:not(.landing):not(.login):not(.register):not(.forgotpassword):not(.resetpassword) {
+    padding: 1rem;
+}
+
+main h2:not(.hero-banner h2) {
+    margin-bottom: 1rem;
+}
+
+.active-page {
+    border-bottom: 1px solid #FFD416;
+}
+
+.notification-box {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    max-width: 24rem;
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid #F2F2F2;
+    border-radius: 4px;
+    position: fixed;
+    top: calc(64px + 1rem);
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.notification-success {
+    width: 24px;
+    height: 24px;
+    font-size: 1.5em;
+    color: green;
+}
+
+.notification-error {
+    width: 24px;
+    height: 24px;
+    font-size: 1.5em;
+    color: #D0342C;
+}
+
+.notification-box-text {
+    display: block;
+    width: calc(100% - 24px - 1rem);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
+    font-family: "Poppins", sans-serif;
+    font-size: small;
+    margin-left: 1rem;
+}
+
+/* ########## Navigation Bar ########## */
+.hamburger-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.hamburger-button span {
+    display: block;
+    background-color: black;
+    width: 100%;
+    height: 2px;
+}
+
+.navigation-close-button {
+    display: none;
+    position: absolute;
+    top: 0;
+    margin-top: 0.5rem;
+    margin-left: 0;
+    z-index: 3;
+}   
+
+.navigation-close-button.show {
+    display: block;
+    font-size: 36px;
+}
+
+.navigation-logo h1 {
+    font-size: 1.2em;
+}
+
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
+    height: 64px;
+    background-color: white;
+    font-family: 'Raleway', sans-serif;
+    z-index: 1;
+    border-bottom: 4px solid #007155;
+}
+
+.navigation-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 100%;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 1rem;
+    text-align: center;
+    list-style-type: none;
+    background-color: white;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.navigation-links.show {
+    transition: 0.5s;
+    right: 0;
+}
+
+.navigation-links li {
+    list-style-type: none;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.navigation-links a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.navigation-links a:hover:not(.bullet) {
+    text-decoration: underline;
+}
+
+.bullet:hover {
+    background-color: gray;
+}
+
+/* ########## Hero Banner ########## */
+.hero-banner {
+    /* 88vh - 64px*/
+    height: calc(100vh - 64px);
+    width: 100%;
+    background-image: url("../images/landing-background.jpg");
+    background-size: cover;
+    background-position: 20% 40%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.hero-content {
+    display: flex;
+    gap: 1.6rem;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100%;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: white;
+}
+
+.hero-content h2 {
+    font-size: 2.2em;
+    font-family: "Noto Sans", sans-serif;
+}
+
+.hero-content p {
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+}
+
+.cta {
+    background-color: #007155;
+    padding: 0.6rem 1rem 0.6rem 1rem;
+    width: 3.4rem;
+    border-radius: 1rem;
+    color: white;
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    text-decoration: none;
+}
+
+.secondary-cta {
+    background-color: #FFD416;
+    color: black;
+}
+
+.cta:hover {
+    background-color: gray;
+}
+
+/* ########## Landing Page ########## */
+.landing-section h2 {
+    font-size: 1.6em;
+    font-family: "Inter", sans-serif;
+    color: #434341;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.landing-section p {
+    font-family: "Lato", sans-serif;
+    color: #434341;
+}
+
+.landing-section-wrapper {
+    padding-top: 64px;
+    padding-bottom: 64px;
+}
+
+.landing-section {
+    padding: 1rem;
+}
+
+.walkthrough {
+    display: grid;
+    grid-auto-flow: row;
+    justify-items: center;
+    gap: 2rem;
+}
+
+.walkthrough-header {
+    display: grid;
+    grid-template-columns: 64px auto;
+    align-items: center;
+    background-color: #F47D20;
+    border-radius: 32px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    max-width: 16rem;
+    margin: 0rem auto 1rem auto;
+}
+
+.walkthrough-card h3 {
+    font-family: "Lato", sans-serif;
+    color: #434341;
+}
+
+
+.landing-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #434341;
+    background-color: #F2F2F2;
+    border-radius: 100%;
+    width: 3.6rem;
+    height: 3.6rem;
+}
+
+.bullet {
+    background-color: #FFD416;
+    padding: 0.8rem 1.5rem 0.8rem 1.5rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    color: black;
+    max-width: 16rem;
+}
+
+.landing-section .bullet {
+    display: block;
+    font-family: "Inter", sans-serif;
+    text-align: center;
+    margin: auto;
+}
+
+/* ########## Profile ########## */
+/* ########## Dashboard ########## */
+.dashboard h3 {
+    font-size: 1.6em;
+    font-family: "Inter", sans-serif;
+    color: #434341;
+    margin-bottom: 1rem;
+}
+
+.dashboard-section-wrapper li{
+    list-style-type: none;
+}
+
+.dashboard-section-wrapper p, a{
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    color: black;
+}
+
+.dashboard-section-wrapper a:hover{
+    text-decoration: underline;
+}
+
+
+
+
+.dashboard-section1 { grid-area: profile; }
+.dashboard-section2 { grid-area: listings-made; }
+.dashboard-section3 { grid-area: listings-followed; }
+
+.dashboard-section-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas: 
+    'profile'
+    'listings-made'
+    'listings-followed';
+    padding-top: 64px;
+    padding-bottom: 64px;
+}
+
+.dashboard-section1, .dashboard-section2, .dashboard-section3 {
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: lightgray;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+}
+
+/* ########## Page Centering Wrapper ########## */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 64px);
+    background-color: #007155;
+    padding: 0.5rem;
+}
+
+/* ########## Admin Page ########## */
+.admin h2 {
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 1rem;
+}
+
+.admin h3 {
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 1rem;
+}
+
+.admin p {
+    font-family: "Open Source Pro", sans-serif;
+    margin-bottom: 1rem;
+}
+
+.admin ul {
+    list-style-position: inside;
+}
+.admin li {
+    font-family: "Open Source Pro", sans-serif;
+}
+
+.admin section {
+    margin-bottom: 1rem;
+}
+
+.admin-form h4 {
+    font-family: "Poppins", sans-serif;
+}
+
+
+.admin-form button {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    background-color: #D0342C;
+    color: white;
+    padding: 0.5rem;
+}
+
+
+.admin-form button:hover {
+    border: none;
+    background-color: gray;
+    color: white;
+    padding: 0.5rem;
+}
+
+/* ########## Forms ########## */
+.primary-form {
+
+}
+
+.form-option {
+    display: none;
+}
+
+.selected-form {
+    display: block;
+}
+
+.form-section {
+    border-radius: 4px;
+    background-color: white;
+    max-width: 18rem;
+    padding-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 2rem;
+    margin: 0.5rem;
+}
+
+.form-section h2 {
+    font-size: 2em;
+    font-family: "Inter", sans-serif;
+    text-align: center;
+}
+
+.form-element {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+}
+
+.form-element label {
+    font-size: small;
+}
+
+.form-element input,
+.form-element button {
+    outline-color: #FFD416;
+}
+
+.form-element input[type="text"],
+.form-element input[type="password"] {
+    padding: 0.5em;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+}
+
+textarea { 
+    resize: vertical; 
+}
+
+.form-element input[type="checkbox"] {
+    vertical-align: middle;
+}
+
+.form-redirect {
+    font-family: "Inter", sans-serif;
+    text-align: center;
+    font-size: small;
+}
+
+.form-redirect a {
+    text-decoration: underline;
+    color: blue;
+}
+
+.form-tab h3 {
+    font-family: "Inter", sans-serif;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.form-tab {
+    display: none;
+}
+
+.form-tab.active {
+    display: block;
+}
+
+.invalid-entry {
+    border: 2px solid red;
+}
+
+.form-warning {
+    display: none;
+    font-size: small;
+    margin-bottom: 1rem;
+}
+
+.form-warning.active {
+    display: block;
+    text-align: center;
+    color: red;
+    font-family: "Open Source Pro", sans-serif;
+}
+
+.form-error {
+    color: red;
+    text-align: center;
+    font-family: "Open Source Pro", sans-serif;
+    font-size: small;
+    margin-bottom: 1rem;
+}
+
+.form-buttons button {
+    max-width: 8rem;
+}
+
+.form-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.primary-form button {
+    padding: 0.5rem;
+    border: none;
+    cursor: pointer;
+    background-color: #F47D20;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.primary-form button:hover {
+    background-color: gray;
+}
+
+
+/* ########## Listing ########## */
+
+.listing {
+    padding: 1rem;
+}
+
+.listing section {
+    margin-bottom: 1rem;
+}
+
+.listing > section p {
+    font-family: "Lato", sans-serif;
+}
+
+.listing > section h3 {
+    font-family: "Inter", sans-serif;
+}
+
+.listing-header {
+    font-family: "Inter", sans-serif;
+}
+
+.listing-header h2 {
+    font-size: 1.4rem;
+}
+
+.listing-header p {
+    font-size: 0.8rem;
+}
+
+.listing-header a {
+    text-decoration: none;
+}
+
+.listing-body p {
+    font-family: "Lato", sans-serif;
+}
+
+.follow-button {
+    background-color: #F47D20;
+    border: none;
+    padding: 0.5rem;
+    color: black;
+    margin-top: 0.5rem;
+}
+
+.follow-button:hover {
+    background-color: gray;
+}
+
+.unfollow-button {
+    background-color: #D0342C;
+    border: none;
+    padding: 0.5rem;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+.unfollow-button:hover {
+    background-color: gray;
+}
+
+/* Slideshow */
+.listing-slideshow {
+    position: relative;
+    max-width: 100%;
+    margin: 0rem auto 1rem auto;
+    z-index: 0;
+}
+
+.slideshow-previous,
+.slideshow-next {
+    display: flex;
+    background-color: transparent;
+    border: none;
+    color: #BBBBBB;
+    font-size: 2rem;
+    padding: 0.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.slideshow-previous:hover,
+.slideshow-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 2px;
+}
+
+.slideshow-previous {
+    left: 0;
+}
+
+.slideshow-next {
+    right: 0;
+}
+
+.slideshow-dots {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+
+}
+
+.slideshow-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #BBBBBB;
+    cursor: pointer;
+}
+
+.slide {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #F2F2F2;
+    height: 16rem;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.active-slide, .slideshow-dot:hover  {
+    background-color: #F47D20;
+}
+
+
+/* ########## Listing Search Pages ########## */
+.listings {
+    padding: 1rem;
+    min-height: 100vh;
+}
+
+.search-filters {
+    background-color: #007155;
+    width: 100%;
+    left: 0;
+    top: 64px;
+    
+}
+
+.search-filters legend {
+    font-size: 1.15em;
+}
+
+.fldCampus, .fldComplex, .fldRoomSize, .fldBathroom, .fldMin, .fldMax, .separator, .fldNumBedroom, .fldNumBathroom, .fldLocation, .fldAmenities, .filterSubmit {
+    display: inline-block;
+    font-family: "Inter", sans-serif;
+    padding: 0.5rem;    
+}
+
+.filterSubmit button {
+    padding: 0.5rem;
+    border: none;
+    background-color: #F47D20;
+    cursor: pointer;
+    margin-left: 1rem;
+    font-family: "Inter", sans-serif;
+}
+
+.filterSubmit button:hover {
+    background-color: gray;
+}
+
+.search-filters select, .search-filters input{
+    border: none;
+    padding: 0.5rem;
+    font-size: .9em;
+}
+
+/* Getting rid of arrows in number input field*/
+
+.search-listings {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.search-listing-wrapper {
+    margin-top: 64px;
+}
+
+.search-listing-wrapper h2 {
+    font-family: "Inter", sans-serif;
+}
+
+.search-listing-wrapper h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 1em;
+}
+
+.search-listing-wrapper p {
+    font-family: "Lato", sans-serif;
+}
+
+.search-listing-header {
+    padding: 1rem;
+    background-color: #BBBBBB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-listing-header button {
+    padding: 0.5rem;
+    border: none;
+    background-color: #F47D20;
+    cursor: pointer;
+    margin-left: 1rem;
+    font-family: "Inter", sans-serif;
+}
+
+.search-listing-header button:hover {
+    background-color: gray;
+}
+
+.search-listing-header > button > a {
+    text-decoration: none;
+    color: black;
+}
+
+.search-listing-header h3 {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    background-color: #BBBBBB;
+}
+
+.search-listing-thumbnail {
+    background-color: purple;
+    height: 14rem;
+    min-height: 14rem;
+    max-height: 14rem;
+    width: 100%;
+}
+
+.search-listing-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.new-listing-button {
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: #F47D20;
+    text-decoration: none;
+    color: black;
+    font-family: "Inter", sans-serif;
+}
+
+.new-listing-button:hover {
+    background-color: gray;
+}
+
+/* ########## Footer ########## */
+footer {
+    background-color: #66AC47;
+    color: #434341;
+    padding: 1rem;
+}
+
+footer h2 {
+    color: #434341;
+    font-family: "Inter", sans-serif;
+}
+
+footer p {
+    color: #434341;
+    font-family: "Lato", sans-serif;
+}
+
+footer a {
+    text-decoration: none;
+    color: #434341;
+    font-family: "Lato", sans-serif;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* ########## NEW LISTING POST FORM PAGE ########## */
+
+.new-post h2 {
+    font-family: "Inter", sans-serif;
+}
+
+.new-post hr {
+    margin-bottom: 1rem;
+}
+
+.new-post button {
+    background-color: #F47D20;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0.5rem;
+    border: none;
+    max-width: 16rem;
+}
+
+.new-post button:hover {
+    background-color: gray;
+}
