@@ -14,8 +14,8 @@
             <meta name="author" content="Vincent Lai">
             <meta name="description" content="">
             <link rel="stylesheet" href="css/styles.css">
-            <link rel="stylesheet" type="text/css" media="(max-width: 800px)" href="css/tablet.css">
-            <link rel="stylesheet" type="text/css" media="(max-width: 600px)" href="css/phone.css">
+            <link rel="stylesheet" type="text/css" media="(max-width: 1400px)" href="css/tablet.css">
+            <link rel="stylesheet" type="text/css" media="(max-width: 992px)" href="css/phone.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </head>
 <?php
