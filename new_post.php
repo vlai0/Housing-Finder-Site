@@ -147,6 +147,7 @@
 
                 /* INSERT NEW DORMITORY LISTING INTO DATABASE */
                 $DEBUG = false;
+                echo "Posting";
                 if($validInput && $DEBUG == false) {
                     // Insert into tblListing.
                     $sql = "INSERT INTO tblListing (pfkUsername, fldListingTitle, fldListingDescription, fldListingAdditionalInformation) VALUES (?, ?, ?, ?)";
@@ -189,165 +190,166 @@
                         
                         $orderNumber++;
                     }
-
+                }
                 // Validate Apartment Post Form
-                } else if ($postType == "Apartment Listing") {
-                    $apartmentListingTitle = getPostData("txtListingTitle");
-                    $apartmentListingType = getPostData("radApartmentListingType");
-                    $location = getPostData("selectTown");
-                    $rent = (float)getPostData("numRent");
-                    $bedrooms = (int)getPostData("numBedrooms");
-                    $bathrooms = (int)getPostData("numBathrooms");
-                    $hasAirConditioning = getPostData("chkAirConditioning") == "on" ? 1 : 0;
-                    $hasLaundry = getPostData("chkLaundry") == "on" ? 1 : 0;
-                    $hasParking = getPostData("chkParking") == "on" ? 1 : 0;
-                    $hasDishwasher = getPostData("chkDishwasher") == "on" ? 1 : 0;
-                    $hasInternet = getPostData("chkInternet") == "on" ? 1 : 0;
-                    $apartmentDescription = getPostData("txtDescription");
-                    $apartmentAdditionalInformation = getPostData("txtAdditionalInformation");
+            } else if ($postType == "Apartment Listing") {
+                // Get data for apartment post.
+                $apartmentListingTitle = getPostData("txtListingTitle");
+                $apartmentListingType = getPostData("radApartmentListingType");
+                $location = getPostData("selectTown");
+                $rent = (float)getPostData("numRent");
+                $bedrooms = (int)getPostData("numBedrooms");
+                $bathrooms = (int)getPostData("numBathrooms");
+                $hasAirConditioning = getPostData("chkAirConditioning") == "on" ? 1 : 0;
+                $hasLaundry = getPostData("chkLaundry") == "on" ? 1 : 0;
+                $hasParking = getPostData("chkParking") == "on" ? 1 : 0;
+                $hasDishwasher = getPostData("chkDishwasher") == "on" ? 1 : 0;
+                $hasInternet = getPostData("chkInternet") == "on" ? 1 : 0;
+                $apartmentDescription = getPostData("txtDescription");
+                $apartmentAdditionalInformation = getPostData("txtAdditionalInformation");
 
-                    /* VALIDATE LISTING TITLE */
-                    if(strlen($apartmentListingTitle) > 64) {
-                        $validInput = false;
-                        $errorMessage = "Listing title too long. Can only be up to 64 characters long.";
-                    }
+                /* VALIDATE LISTING TITLE */
+                if(strlen($apartmentListingTitle) > 64) {
+                    $validInput = false;
+                    $errorMessage = "Listing title too long. Can only be up to 64 characters long.";
+                }
 
-                    /* VALIDATE LISTING TYPE */
-                    if($validInput && $apartmentListingType != "Apartment Roommate Request" && $apartmentListingType != "Sublease") {
-                        $validInput = false;
-                        $errorMessage = "Please select a listing type.";
-                    }
+                /* VALIDATE LISTING TYPE */
+                if($validInput && $apartmentListingType != "Apartment Roommate Request" && $apartmentListingType != "Sublease") {
+                    $validInput = false;
+                    $errorMessage = "Please select a listing type.";
+                }
 
-                    /* VALIDATE LOCATION */
-                    $locations = array("Burlington", "South Burlington", "Winooski", "Colchester", "Shelburne", "Essex", "Williston", "Other");
-                    if($validInput && !in_array($location, $locations)) {
-                        $validInput = false;
-                        $errorMessage = "Please select a listed city/town option.";
-                    }
+                /* VALIDATE LOCATION */
+                $locations = array("Burlington", "South Burlington", "Winooski", "Colchester", "Shelburne", "Essex", "Williston", "Other");
+                if($validInput && !in_array($location, $locations)) {
+                    $validInput = false;
+                    $errorMessage = "Please select a listed city/town option.";
+                }
 
-                    /* VALIDATE RENT */
-                    if($validInput && $rent >= 1000000 || $rent < 0) {
-                        $validInput = false;
-                        $errorMessage = "Rent values are limited to the range $0 to $1,000,000/month.";
-                    }
+                /* VALIDATE RENT */
+                if($validInput && $rent >= 1000000 || $rent < 0) {
+                    $validInput = false;
+                    $errorMessage = "Rent values are limited to the range $0 to $1,000,000/month.";
+                }
 
-                    /* VALIDATE BEDROOMS */
-                    if($validInput && $bedrooms >= 100 || $bedrooms < 0) {
-                        $validInput = false;
-                        $errorMessage = "Bedroom values are limited to the range 0 to 100.";
-                    }
+                /* VALIDATE BEDROOMS */
+                if($validInput && $bedrooms >= 100 || $bedrooms < 0) {
+                    $validInput = false;
+                    $errorMessage = "Bedroom values are limited to the range 0 to 100.";
+                }
 
-                    /* VALIDATE BATHROOMS */
-                    if($validInput && $bathrooms >= 100 || $bathrooms < 0) {
-                        $validInput = false;
-                        $errorMessage = "Bathroom values are limited to the range 0 to 100.";
-                    }
+                /* VALIDATE BATHROOMS */
+                if($validInput && $bathrooms >= 100 || $bathrooms < 0) {
+                    $validInput = false;
+                    $errorMessage = "Bathroom values are limited to the range 0 to 100.";
+                }
 
-                    /* DO NOT NEED TO VALIDATE CHECKBOXES. THEY ARE EITHER SELECTED OR UNSELECTED. USER DOES NOT NEED TO SELECT ANY IF THEY DONT WANT TO. */
+                /* DO NOT NEED TO VALIDATE CHECKBOXES. THEY ARE EITHER SELECTED OR UNSELECTED. USER DOES NOT NEED TO SELECT ANY IF THEY DONT WANT TO. */
 
-                    /* GET AND VALIDATE PHOTOS */
-                    if($validInput) {
-                        if(isset($_FILES["imgListingPhotos"])) {
-                            // Create array of photos and check that there is at least one.
-                            $tmp = array();
-                            $count = count(array_filter($_FILES['imgListingPhotos']['name']));
-                            if($count != 0) {
-                                foreach($_FILES['imgListingPhotos']['tmp_name'] as $key => $tmpName) {
-                                    $photoName = basename($_FILES['imgListingPhotos']['name'][$key]);
-                                    $photoFileType = strtolower(pathinfo($photoName, PATHINFO_EXTENSION));
-                                    $photoSize = $_FILES['imgListingPhotos']['size'][$key];
-                                    array_push($photos, array("name" => $photoName, "tmp_name" => $tmpName, "type" => $photoFileType, "size" => $photoSize));
-                                }
-                            } else {
-                                $validInput = false;
-                                $errorMessage = "You must upload at least one photo.";
+                /* GET AND VALIDATE PHOTOS */
+                if($validInput) {
+                    if(isset($_FILES["imgListingPhotos"])) {
+                        // Create array of photos and check that there is at least one.
+                        $tmp = array();
+                        $count = count(array_filter($_FILES['imgListingPhotos']['name']));
+                        if($count != 0) {
+                            foreach($_FILES['imgListingPhotos']['tmp_name'] as $key => $tmpName) {
+                                $photoName = basename($_FILES['imgListingPhotos']['name'][$key]);
+                                $photoFileType = strtolower(pathinfo($photoName, PATHINFO_EXTENSION));
+                                $photoSize = $_FILES['imgListingPhotos']['size'][$key];
+                                array_push($photos, array("name" => $photoName, "tmp_name" => $tmpName, "type" => $photoFileType, "size" => $photoSize));
                             }
                         } else {
                             $validInput = false;
                             $errorMessage = "You must upload at least one photo.";
                         }
-                    }
-
-                    // Check if all files are either .png, .jpeg, or .jpg.
-                    if($validInput) {
-                        foreach($photos as $photo) {
-                            if($photo["type"] != "jpg" && $photo["type"] != "jpeg" && $photo["type"] != "png") {
-                                $validInput = false;
-                                $errorMessage = "Images can only be jpg, jpeg, or png.";
-                            }
-                        }
-                    }
-
-                    // Check if all files are at most 2MB.
-                    if($validInput) {
-                        foreach($photos as $photo) {
-                            if($photo["size"] > 2097152) {
-                                $errorMessage = "You are trying to upload an image that is too large. Each image must be less than 2MB.";
-                            }
-                        }
-                    }
-
-                    /* VALIDATE LISTING DESCRIPTION */
-                    // Check that description doesn't exceed 10000 characters.
-                    if($validInput && strlen($apartmentDescription) > 10000) {
+                    } else {
                         $validInput = false;
-                        $errorMessage = "Description cannot exceed 10,000 characters.";
+                        $errorMessage = "You must upload at least one photo.";
                     }
+                }
 
-                    /* VALIDATE ADDITIONAL INFORMATION */
-                    // Check that additional information doesn't exceed 10000 characters.
-                    if($validInput && strlen($apartmentAdditionalInformation) > 10000) {
-                        $validInput = false;
-                        $errorMessage = "Additional information cannot exceed 10,000 characters.";
-                    }
-
-                    /* INSERT NEW APARTMENT LISTING INTO DATABASE */
-                    $DEBUG = false;
-                    if($validInput && $DEBUG == false) {
-                        // Insert into tblListing.
-                        $sql = "INSERT INTO tblListing (pfkUsername, fldListingTitle, fldListingDescription, fldListingAdditionalInformation) VALUES (?, ?, ?, ?)";
-                        $data = array($_SESSION["username"], $apartmentListingTitle, $apartmentDescription, $apartmentAdditionalInformation);
-                        $success = $thisDatabaseWriter->insert($sql, $data);
-
-                        // Get new listing id.
-                        $sql = "SELECT pmkListingId FROM tblListing ";
-                        $sql .= "WHERE pfkUsername = ? ORDER BY fldCreationTimestamp DESC LIMIT 1";
-                        $data = array($_SESSION["username"]);
-                        $results = $thisDatabaseReader->select($sql, $data);
-                        $listingID = $results[0]["pmkListingId"];
-
-                        // Insert into tblListingApartment
-                        $sql = "INSERT INTO tblApartmentListing (fldTown, fldRent, fldBedrooms, fldBathrooms, fnkListingId, fldHasAirConditioning, fldHasLaundry, fldHasParking, fldHasDishwasher, fldHasInternet) ";
-                        $sql .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        $data = array($location, $rent, $bedrooms, $bathrooms, $listingID, $hasAirConditioning, $hasLaundry, $hasParking, $hasDishwasher, $hasInternet);
-                        $success = $thisDatabaseWriter->insert($sql, $data);
-
-                        // Add photos.
-                        // Add profile photo to profile images path and rename to standardized name.
-                        $standardizedImagePath = NULL;
-                        $orderNumber = 1;
-                        $newDirPath = "images/listings/apartment_listings/".$listingID;
-                        mkdir($newDirPath, 0777, true);
-
-                        foreach($photos as $photo) {
-                            // Add photo to its directory.
-                            $name = $photo["name"];
-                            $profileImagePath = "images/listings/apartment_listings/".$listingID."/".$name;
-                            $standardizedImagePath = "images/listings/apartment_listings/".$listingID."/".$listingID."_".$orderNumber.".png";
-                            move_uploaded_file($photo["tmp_name"], $profileImagePath);
-                            rename($profileImagePath, $standardizedImagePath);
-
-                            // Insert photo path into database.
-                            $sql = "INSERT INTO tblListingImages (pfkListingId, fldOrderNumber, fldImagePath) ";
-                            $sql .= "VALUES (?, ?, ?)";
-                            $data = array($listingID, $orderNumber, $standardizedImagePath);
-                            $thisDatabaseWriter->insert($sql, $data);
-                            
-                            $orderNumber++;
+                // Check if all files are either .png, .jpeg, or .jpg.
+                if($validInput) {
+                    foreach($photos as $photo) {
+                        if($photo["type"] != "jpg" && $photo["type"] != "jpeg" && $photo["type"] != "png") {
+                            $validInput = false;
+                            $errorMessage = "Images can only be jpg, jpeg, or png.";
                         }
                     }
-                }   
-            }
+                }
+
+                // Check if all files are at most 2MB.
+                if($validInput) {
+                    foreach($photos as $photo) {
+                        if($photo["size"] > 2097152) {
+                            $errorMessage = "You are trying to upload an image that is too large. Each image must be less than 2MB.";
+                        }
+                    }
+                }
+
+                /* VALIDATE LISTING DESCRIPTION */
+                // Check that description doesn't exceed 10000 characters.
+                if($validInput && strlen($apartmentDescription) > 10000) {
+                    $validInput = false;
+                    $errorMessage = "Description cannot exceed 10,000 characters.";
+                }
+
+                /* VALIDATE ADDITIONAL INFORMATION */
+                // Check that additional information doesn't exceed 10000 characters.
+                if($validInput && strlen($apartmentAdditionalInformation) > 10000) {
+                    $validInput = false;
+                    $errorMessage = "Additional information cannot exceed 10,000 characters.";
+                }
+
+                /* INSERT NEW APARTMENT LISTING INTO DATABASE */
+                $DEBUG = false;
+                echo "Posting";
+                if($validInput && $DEBUG == false) {
+                    // Insert into tblListing.
+                    $sql = "INSERT INTO tblListing (pfkUsername, fldListingTitle, fldListingDescription, fldListingAdditionalInformation) VALUES (?, ?, ?, ?)";
+                    $data = array($_SESSION["username"], $apartmentListingTitle, $apartmentDescription, $apartmentAdditionalInformation);
+                    $success = $thisDatabaseWriter->insert($sql, $data);
+
+                    // Get new listing id.
+                    $sql = "SELECT pmkListingId FROM tblListing ";
+                    $sql .= "WHERE pfkUsername = ? ORDER BY fldCreationTimestamp DESC LIMIT 1";
+                    $data = array($_SESSION["username"]);
+                    $results = $thisDatabaseReader->select($sql, $data);
+                    $listingID = $results[0]["pmkListingId"];
+
+                    // Insert into tblListingApartment
+                    $sql = "INSERT INTO tblApartmentListing (fldTown, fldRent, fldBedrooms, fldBathrooms, fnkListingId, fldHasAirConditioning, fldHasLaundry, fldHasParking, fldHasDishwasher, fldHasInternet) ";
+                    $sql .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    $data = array($location, $rent, $bedrooms, $bathrooms, $listingID, $hasAirConditioning, $hasLaundry, $hasParking, $hasDishwasher, $hasInternet);
+                    $success = $thisDatabaseWriter->insert($sql, $data);
+
+                    // Add photos.
+                    // Add profile photo to profile images path and rename to standardized name.
+                    $standardizedImagePath = NULL;
+                    $orderNumber = 1;
+                    $newDirPath = "images/listings/apartment_listings/".$listingID;
+                    mkdir($newDirPath, 0777, true);
+
+                    foreach($photos as $photo) {
+                        // Add photo to its directory.
+                        $name = $photo["name"];
+                        $profileImagePath = "images/listings/apartment_listings/".$listingID."/".$name;
+                        $standardizedImagePath = "images/listings/apartment_listings/".$listingID."/".$listingID."_".$orderNumber.".png";
+                        move_uploaded_file($photo["tmp_name"], $profileImagePath);
+                        rename($profileImagePath, $standardizedImagePath);
+
+                        // Insert photo path into database.
+                        $sql = "INSERT INTO tblListingImages (pfkListingId, fldOrderNumber, fldImagePath) ";
+                        $sql .= "VALUES (?, ?, ?)";
+                        $data = array($listingID, $orderNumber, $standardizedImagePath);
+                        $thisDatabaseWriter->insert($sql, $data);
+                        
+                        $orderNumber++;
+                    }
+                }
+            }   
         }
     ?>
     <form class="post-form-selector">
@@ -481,7 +483,13 @@
 
     <!-- Form Errors -->
     <?php
-        print "<p class=\"form-error\">".$errorMessage."</p>";
+        if($_SERVER["REQUEST_METHOD"] === "POST") {
+            if($errorMessage == "") {
+                print "<p>Success!</p>";
+            } else {
+                print "<p class=\"form-error\">".$errorMessage."</p>";
+            }
+        }
     ?>
 
     <script>
