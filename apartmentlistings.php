@@ -47,15 +47,13 @@
                 }
                 if ($listBedrooms != "1" && $listBedrooms != "2" && $listBedrooms != "3" && $listBedrooms != "No Pref"){
                     $sql .= "AND fldBedrooms >= 4 ";
-                    array_push($data, $listBedrooms);
                 }
-                else if ($listBedrooms != "No Pref") {
+                else if ($listBedrooms != "No Pref" && $listBedrooms != "4+") {
                     $sql .= "AND fldBedrooms = ? ";
                     array_push($data, $listBedrooms);
                 }
                 if ($listBathrooms != "1" && $listBathrooms != "2" && $listBathrooms != "3" && $listBathrooms != "No Pref"){
                     $sql .= "AND fldBedrooms >= 4 ";
-                    array_push($data, $listBathrooms);
                 }
                 else if ($listBathrooms != "No Pref"){
                     $sql .= "AND fldBathrooms = ? ";
@@ -95,9 +93,9 @@
                 Town/city
             -->
             <div class="fldMin">
-                <legend>Minimum Price ($)</legend>
+                <legend>Minimum Rent ($)</legend>
                 <p>
-                    <input type="number" name="numMin" id="numMin" value="0" <?php if($numMin != "0") { print $numMin; } ?>>
+                    <input type="number" name="numMin" id="numMin" min="0" max="999999" step="0.01" value="<?php if($numMin >= "0" && $numMin < "1000000") { print $numMin; } else { print "0"; } ?>">
                 </p>
             </div>
 
@@ -106,9 +104,9 @@
             </p>
 
             <div class="fldMax">
-                <legend>Maximum Price ($)</legend>
+                <legend>Maximum Rent ($)</legend>
                 <p>
-                    <input type="number" name="numMax" id="numMax" value="10000" <?php if($numMax != "10000") { print $numMax; } ?>>
+                    <input type="number" name="numMax" id="numMax" min="0" max="999999" step="0.01" value="<?php if($numMax < "1000000" && $numMax >= "0") { print $numMax; } else { print "999999"; } ?>">
                 </p>
             </div>
 
